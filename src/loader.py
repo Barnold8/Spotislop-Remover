@@ -1,5 +1,3 @@
-import sys
-import subprocess
 import pkg_resources
 from typing import List
 
