@@ -1,4 +1,20 @@
 from typing import List
+from random import randint
+import string
+import sys
+
+
+def generateRandomString(length:int) -> str:
+
+    chars = [list(string.ascii_uppercase) + list(string.digits) + list(string.ascii_lowercase)]
+    chars = [item for items in chars for item in items]
+
+    randomString = ""
+
+    for i in range(length):
+        randomString += chars[randint(0,len(chars)-1)]
+
+    return randomString
 
 def stringifyQuery(contents):
 

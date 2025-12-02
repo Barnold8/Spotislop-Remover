@@ -1,7 +1,5 @@
 from flask import Flask,redirect
 from Url import *
-import requests
-import sys
 
 def setup(): 
 
@@ -16,13 +14,13 @@ app = Flask(__name__)
 
 
 
-@app.route("/deslop")
-def deslop():
+@app.route("/spotify-auth")
+def spotify_auth():
     
     client = setup()
     redirect_URL = "http://127.0.0.1:5000/result"
 
-    state = "kyHBOCqrn9fee8WA" # make this random
+    state = generateRandomString()
     scope = "user-read-private user-read-email" # actually change this
 
     body = {

@@ -11,6 +11,9 @@ def errorOut(dependencies:List[str]) -> None:
     if len(dependencies) <= 0:
         return
 
+    for library in dependencies:
+        print(library)
+
 def satisfiedLibs() -> bool:
 
     required  = None
