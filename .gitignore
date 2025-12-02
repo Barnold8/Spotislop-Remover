@@ -1,2 +1,7 @@
 token
+CLIENT_ID
 __pycache__
+*.cfg
+Include
+Lib
+Scripts
