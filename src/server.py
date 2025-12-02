@@ -1,32 +1,22 @@
 from flask import Flask,redirect
 from Url import *
-
-def setup(): 
-
-    f = None
-
-    with open("../contents/CLIENT_ID") as file:
-        f = file.readlines()
-
-    return f[0]
+from loader import loadContents
 
 app = Flask(__name__)
-
-
 
 @app.route("/spotify-auth")
 def spotify_auth():
     
-    client = setup()
+    contents = loadContents()
     redirect_URL = "http://127.0.0.1:5000/result"
 
-    state = generateRandomString()
-    scope = "user-read-private user-read-email" # actually change this
+    state = generateRandomString(16)
+    scope = "playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public" # actually change this
 
     body = {
 
         "response_type": 'code',
-        "client_id": client,
+        "client_id": contents["client_id"],
         "scope": scope,
         "redirect_uri": redirect_URL,
         "state": state
