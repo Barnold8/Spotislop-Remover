@@ -1,7 +1,5 @@
 {
-
     "redirects":{
-        "spotifyAuth": "https://127.0.0.1/spotify-auth/result"
+        "spotify-auth": "http://127.0.0.1:5000/spotify-auth/result"
     }
-
 }
