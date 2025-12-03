@@ -110,6 +110,8 @@ def loadContents() -> dict:
 
     with open("../contents/CLIENT_ID") as client:
         contents["client_id"] = client.read()
+    with open("../contents/CLIENT_SECRET") as client:
+        contents["client_secret"] = client.read()
 
     grabBands()
 
