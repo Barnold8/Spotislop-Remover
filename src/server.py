@@ -13,7 +13,7 @@ def spotify_auth():
 def index():
     return render_template("index.html",content="Hello")
 
-@app.route("/result")
+@app.route("/spotify-auth/result")
 def result():
 
     MAXLEN    = 306
@@ -26,4 +26,4 @@ def result():
     if len(userCode) < MAXLEN:
         return render_template("error.html",error="Returned auth code did not meet minimum character length")
     
-    return f""
+    return f"<h1>Auth accepted</h1>"
