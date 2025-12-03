@@ -1,0 +1,7 @@
+{
+
+    "redirects":{
+        "spotifyAuth": "https://127.0.0.1/spotify-auth/result"
+    }
+
+}
