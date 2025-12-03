@@ -15,7 +15,7 @@ def index():
 
 @app.route("/result")
 def result():
-    
+
     MAXLEN    = 306
     userCode  = request.args.get('code')
     userState = request.args.get('state')
@@ -26,6 +26,4 @@ def result():
     if len(userCode) < MAXLEN:
         return render_template("error.html",error="Returned auth code did not meet minimum character length")
     
-    
-
-    return f"{getAccessToken(userCode)}"
+    return f""
