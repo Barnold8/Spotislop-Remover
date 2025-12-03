@@ -30,7 +30,7 @@ def getAccessToken(OAuthToken:str) -> str:
 
     # print(x.text,sys.stderr)
 
-    return x
+    return 
 
 def getUserPlaylists(OAuthToken:str)-> None:
 
