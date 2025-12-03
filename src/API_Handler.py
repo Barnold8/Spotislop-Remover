@@ -21,16 +21,26 @@ def OAuth_Spotify():
 
 def getAccessToken(OAuthToken:str) -> str:    
 
-    # headers = {
-    #     'content-type': 'application/x-www-form-urlencoded',
-    #     'Authorization': 'Basic ' + OAuthToken
-    # }
-    # url = 'https://accounts.spotify.com/api/token'
-    # x = requests.post(url,headers=headers)
+    contents = {}
 
-    # print(x.text,sys.stderr)
+    with open("../contents/CLIENT_ID") as client:
+        contents["client_id"] = client.read()
+    with open("../contents/CLIENT_SECRET") as client:
+        contents["client_secret"] = client.read()
 
-    return 
+    url = "https://accounts.spotify.com/api/token"
+    request_body = {
+        "grant_type": "authorization_code",
+        "code": OAuthToken,
+        "redirect_uri": "http://127.0.0.1:5000/result",
+        "client_id": contents["client_id"],
+        "client_secret": contents["client_secret"],
+    }
+    
+    r = requests.post(url, data=request_body)
+    response = r.json()
+
+    return response
 
 def getUserPlaylists(OAuthToken:str)-> None:
 
