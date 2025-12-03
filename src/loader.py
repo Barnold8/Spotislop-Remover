@@ -111,6 +111,9 @@ def loadContents() -> dict:
     with open("../contents/CLIENT_SECRET") as client:
         contents["client_secret"] = client.read()
 
+    with open("../contents/config.json") as settings:
+        contents["settings"] = json.load(settings)
+
     contents["ai-bands"] = grabBands()
-    
+
     return contents
