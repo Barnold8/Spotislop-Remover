@@ -6,5 +6,5 @@ __pycache__
 Include
 Lib
 Scripts
-*.json
+ai-bands.json
 *.txt
