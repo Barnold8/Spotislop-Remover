@@ -5,8 +5,6 @@ import requests
 from typing import List
 from datetime import datetime
 
-
-
 def errorOut(dependencies:List[str]) -> None: 
 
     if len(dependencies) <= 0:
@@ -113,6 +111,6 @@ def loadContents() -> dict:
     with open("../contents/CLIENT_SECRET") as client:
         contents["client_secret"] = client.read()
 
-    grabBands()
-
+    contents["ai-bands"] = grabBands()
+    
     return contents
