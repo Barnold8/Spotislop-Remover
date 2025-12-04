@@ -1,13 +1,11 @@
 from loader import *
 from server import *
-
+from security import *
 
 if __name__ == "__main__" and satisfiedLibs():
 
-    # print("Running...")
-
-    loadContents()
-
+    # loadContents()
+    app.secret_key = secret_key()
     app.run()
 
 
