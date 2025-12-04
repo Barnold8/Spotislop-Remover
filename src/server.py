@@ -25,9 +25,6 @@ def spotify_oauth():
 
     if len(userCode) < MAXLEN:
         return render_template("error.html",error="Returned auth code did not meet minimum character length")
-    
-    getAccessToken(userCode)
-
 
     return f"<h1>Auth accepted</h1>"
 
