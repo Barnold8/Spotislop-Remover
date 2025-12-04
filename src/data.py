@@ -1,9 +1,7 @@
 import loader
+import sys
 from typing import List
 from datetime import datetime,timedelta
-
-import sys
-
 
 class User:
 
@@ -26,8 +24,6 @@ class User:
 
     def toUser(json:dict) -> 'User':
         pass
-
-
 
 def compileScopes(scopes: List[str]) -> str:
 
