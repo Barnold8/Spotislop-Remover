@@ -3,7 +3,7 @@ import data
 import requests
 
 
-def OAuth_Spotify():
+def OAuth_Spotify() -> dict:
 
     state = generateRandomString(16)
 
@@ -20,7 +20,7 @@ def OAuth_Spotify():
 
     return body
 
-def getAccessToken(OAuthToken:str) -> str:    
+def getAccessToken(OAuthToken:str) -> dict:    
 
     url = "https://accounts.spotify.com/api/token"
     redirect_URL = data.contents["settings"]["redirects"]["spotify-oauth"]
@@ -49,8 +49,5 @@ def getUserPlaylists(accessToken:str)-> None:
     }
     
     response = requests.get(url, headers=headers)
-
-    print(response.text,sys.stderr)
-
 
     return response
