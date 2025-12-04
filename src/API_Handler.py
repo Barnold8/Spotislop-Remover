@@ -7,7 +7,7 @@ def OAuth_Spotify():
 
     state = generateRandomString(16)
 
-    redirect_URL = data.contents["settings"]["redirects"]["spotify-auth"]
+    redirect_URL = data.contents["settings"]["redirects"]["spotify-oauth"]
     scope = data.compileScopes(data.contents["settings"]["scopes"])
 
     body = {
@@ -23,11 +23,12 @@ def OAuth_Spotify():
 def getAccessToken(OAuthToken:str) -> str:    
 
     url = "https://accounts.spotify.com/api/token"
+    redirect_URL = data.contents["settings"]["redirects"]["spotify-oauth"]
 
     request_body = {
         "grant_type": "authorization_code",
         "code": OAuthToken,
-        "redirect_uri": "http://127.0.0.1:5000/result",
+        "redirect_uri": redirect_URL,
         "client_id": data.contents["client_id"],
         "client_secret": data.contents["client_secret"],
     }
@@ -37,11 +38,19 @@ def getAccessToken(OAuthToken:str) -> str:
 
     return response
 
-def getUserPlaylists(OAuthToken:str)-> None:
+def getUserPlaylists(accessToken:str)-> None:
 
-    # url = "https://api.spotify.com/v1/me/playlists"
-    url = f"https://api.spotify.com/v1/users/{OAuthToken}/playlists"
-    headers={"Authorization":"Bearer " + OAuthToken}
+    url = "https://api.spotify.com/v1/me/playlists"
 
-    x = requests.get(url,headers=headers)
-    pass
+    headers = {
+  
+        "Authorization": "Bearer " + accessToken
+
+    }
+    
+    response = requests.get(url, headers=headers)
+
+    print(response.text,sys.stderr)
+
+
+    return response

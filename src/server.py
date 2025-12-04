@@ -5,16 +5,16 @@ import sys
 
 app = Flask(__name__)
 
-@app.route("/spotify-auth")
-def spotify_auth():
-    return redirect(urlBuilder("https://accounts.spotify.com/authorize?",OAuth_Spotify()))
-
 @app.route("/")
 def index():
     return render_template("index.html",content="Hello")
 
-@app.route("/spotify-auth/result")
-def result():
+@app.route("/spotify-auth")
+def spotify_auth_redirect():
+    return redirect(urlBuilder("https://accounts.spotify.com/authorize?",OAuth_Spotify()))
+
+@app.route("/spotify-auth/oauth")
+def spotify_oauth():
 
     MAXLEN    = 306
     userCode  = request.args.get('code')
@@ -26,4 +26,9 @@ def result():
     if len(userCode) < MAXLEN:
         return render_template("error.html",error="Returned auth code did not meet minimum character length")
     
+    getAccessToken(userCode)
+
+
     return f"<h1>Auth accepted</h1>"
+
+
