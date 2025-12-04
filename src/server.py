@@ -26,6 +26,22 @@ def spotify_oauth():
     if len(userCode) < MAXLEN:
         return render_template("error.html",error="Returned auth code did not meet minimum character length")
 
-    return f"<h1>Auth accepted</h1>"
+
+    token = getAccessToken(userCode)["access_token"]
+
+    items = getUserPlaylists(
+        "https://api.spotify.com/v1/me/playlists",
+        token,
+        []
+    )
+
+    x = "<ul>"
+
+    for item in items:
+        x += f"<li>{item["name"]}</li>"
+
+    x += "</ul>"
+
+    return f"<h1>Auth accepted</h1>{x}"
 
 

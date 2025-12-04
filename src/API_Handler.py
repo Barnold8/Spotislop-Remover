@@ -38,14 +38,20 @@ def getAccessToken(OAuthToken:str) -> dict:
 
     return response
 
-def getUserPlaylists(accessToken:str)-> None:
-
-    url = "https://api.spotify.com/v1/me/playlists"
+def getUserPlaylists(url:str,accessToken:str,playlists: List[dict]) -> None:
 
     headers = {
         "Authorization": "Bearer " + accessToken
     }
     
-    response = requests.get(url, headers=headers)
-
-    return response
+    response = requests.get(url, headers=headers).json()
+    nextLink = response["next"]
+    
+    if nextLink != None:
+        return getUserPlaylists(
+            nextLink,
+            accessToken,
+            playlists + response["items"]
+        )
+    
+    return playlists
