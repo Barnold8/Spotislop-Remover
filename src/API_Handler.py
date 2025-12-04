@@ -5,10 +5,10 @@ import requests
 
 def OAuth_Spotify():
 
-    redirect_URL = data.contents["settings"]["redirects"]["spotify-auth"]
-
     state = generateRandomString(16)
-    scope = "playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public" 
+
+    redirect_URL = data.contents["settings"]["redirects"]["spotify-auth"]
+    scope = data.compileScopes(data.contents["settings"]["scopes"])
 
     body = {
         "response_type": 'code',
