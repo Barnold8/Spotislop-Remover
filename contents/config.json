@@ -6,6 +6,6 @@
     "security": {
         "key-length": 32,
         "key-refresh": 30,
-        "refreshed-on": "2025/12/04"
+        "key-refreshed-on": "2025/12/04"
     }
 }
