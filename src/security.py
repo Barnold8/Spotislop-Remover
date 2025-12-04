@@ -8,10 +8,9 @@ def checkDateIntegrity(date:str) -> bool:
     tempDate = date
     config_path     = "../contents/config.json"
 
-    if '/' in date:
-        tempDate = date.replace('/','-')
+
     try:
-        if tempDate != datetime.strptime(tempDate, "%Y-%m-%d").strftime('%Y-%m-%d'):
+        if tempDate != datetime.strptime(tempDate, "%Y/%m/%d").strftime('%Y/%m/%d'):
             raise ValueError
         return True
     except ValueError:
@@ -19,7 +18,7 @@ def checkDateIntegrity(date:str) -> bool:
         with open(config_path,"r+") as file:
 
             data = json.load(file)
-            data["security"]["key-refreshed-on"] = datetime.today().strftime('%Y-%m-%d')
+            data["security"]["key-refreshed-on"] = datetime.today().strftime('%Y/%m/%d')
 
             file.seek(0)
             json.dump(data, file)
