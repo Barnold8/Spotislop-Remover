@@ -4,6 +4,7 @@
     },
     "scopes": ["playlist-read-private", "playlist-read-collaborative", "playlist-modify-private", "playlist-modify-public"],
     "security": {
+        "key-length": 32,
         "key-refresh": 30,
         "refreshed-on": "2025/12/04"
     }
