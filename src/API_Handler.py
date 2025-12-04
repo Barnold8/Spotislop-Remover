@@ -43,9 +43,7 @@ def getUserPlaylists(accessToken:str)-> None:
     url = "https://api.spotify.com/v1/me/playlists"
 
     headers = {
-  
         "Authorization": "Bearer " + accessToken
-
     }
     
     response = requests.get(url, headers=headers)
