@@ -1,6 +1,7 @@
 {
     "redirects":{
-        "spotify-auth": "http://127.0.0.1:5000/spotify-auth/result"
+        "spotify-OAuth": "http://127.0.0.1:5000/spotify-auth/oauth",
+        "spotify-Access-Token": "http://127.0.0.1:5000/spotify-auth/access-token"
     },
     "scopes": ["playlist-read-private", "playlist-read-collaborative", "playlist-modify-private", "playlist-modify-public"]
 }
