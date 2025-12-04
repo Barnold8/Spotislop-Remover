@@ -110,7 +110,6 @@ def loadContents() -> dict:
         contents["client_id"] = client.read()
     with open("../contents/CLIENT_SECRET") as client:
         contents["client_secret"] = client.read()
-
     with open("../contents/config.json") as settings:
         contents["settings"] = json.load(settings)
 
