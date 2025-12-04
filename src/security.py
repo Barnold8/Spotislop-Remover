@@ -6,6 +6,7 @@ from datetime import datetime
 def checkDateIntegrity(date:str) -> bool:
 
     tempDate = date
+    config_path     = "../contents/config.json"
 
     if '/' in date:
         tempDate = date.replace('/','-')
@@ -14,6 +15,16 @@ def checkDateIntegrity(date:str) -> bool:
             raise ValueError
         return True
     except ValueError:
+
+        with open(config_path,"r+") as file:
+
+            data = json.load(file)
+            data["security"]["key-refreshed-on"] = datetime.today().strftime('%Y-%m-%d')
+
+            file.seek(0)
+            json.dump(data, file)
+            file.truncate()
+            
         return False
 
 def hasExpired(daysToExpire:int,lastUpdated:str) -> bool:
@@ -59,7 +70,7 @@ def secret_key() -> str:
                 secret_key = secrets.token_hex(charLen)
                 file.write(secret_key)
 
-            elif len(last_updated) <= 0 or hasExpired(days_to_expire,last_updated):
+            elif checkDateIntegrity(last_updated) == False or hasExpired(days_to_expire,last_updated) == False:
                 file.seek(0)
                 secret_key = secrets.token_hex(charLen)
                 file.write(secret_key)
