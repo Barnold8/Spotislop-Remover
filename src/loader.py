@@ -2,7 +2,7 @@ import pkg_resources
 import os.path
 import json
 import requests
-import secrets
+
 from typing import List
 from datetime import datetime
 
