@@ -8,7 +8,6 @@ def checkDateIntegrity(date:str) -> bool:
     tempDate = date
     config_path     = "../contents/config.json"
 
-
     try:
         if tempDate != datetime.strptime(tempDate, "%Y/%m/%d").strftime('%Y/%m/%d'):
             raise ValueError
