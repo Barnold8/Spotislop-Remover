@@ -3,6 +3,19 @@ import json
 import os
 from datetime import datetime
 
+def checkDateIntegrity(date:str) -> bool:
+
+    tempDate = date
+
+    if '/' in date:
+        tempDate = date.replace('/','-')
+    try:
+        if tempDate != datetime.strptime(tempDate, "%Y-%m-%d").strftime('%Y-%m-%d'):
+            raise ValueError
+        return True
+    except ValueError:
+        return False
+
 def hasExpired(daysToExpire:int,lastUpdated:str) -> bool:
 
     format = '%Y/%m/%d'
@@ -45,9 +58,8 @@ def secret_key() -> str:
             if len(secret_key) <= 0:
                 secret_key = secrets.token_hex(charLen)
                 file.write(secret_key)
-            elif len(secret_key) < charLen:
-                return None
-            elif hasExpired(days_to_expire,last_updated):
+
+            elif len(last_updated) <= 0 or hasExpired(days_to_expire,last_updated):
                 file.seek(0)
                 secret_key = secrets.token_hex(charLen)
                 file.write(secret_key)
