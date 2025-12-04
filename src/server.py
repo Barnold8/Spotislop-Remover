@@ -27,21 +27,11 @@ def spotify_oauth():
         return render_template("error.html",error="Returned auth code did not meet minimum character length")
 
 
-    token = getAccessToken(userCode)["access_token"]
+    return redirect("/spotify/display-playlists")
 
-    items = getUserPlaylists(
-        "https://api.spotify.com/v1/me/playlists",
-        token,
-        []
-    )
+@app.route("/spotify/display-playlists")
+def spotify_display_playlists():
 
-    x = "<ul>"
-
-    for item in items:
-        x += f"<li>{item["name"]}</li>"
-
-    x += "</ul>"
-
-    return f"<h1>Auth accepted</h1>{x}"
+    return "<h1>Playlists</h1>"
 
 
