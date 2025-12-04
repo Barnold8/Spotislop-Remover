@@ -2,5 +2,8 @@
     "redirects":{
         "spotify-oauth": "http://127.0.0.1:5000/spotify-auth/oauth"
     },
-    "scopes": ["playlist-read-private", "playlist-read-collaborative", "playlist-modify-private", "playlist-modify-public"]
+    "scopes": ["playlist-read-private", "playlist-read-collaborative", "playlist-modify-private", "playlist-modify-public"],
+    "security": {
+        "key-refresh": 30
+    }
 }
