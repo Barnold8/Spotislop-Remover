@@ -1,5 +1,5 @@
 from Url import *
-import data
+from data import contents, compileScopes,IMG
 import requests
 
 
@@ -7,12 +7,12 @@ def OAuth_Spotify() -> dict:
 
     state = generateRandomString(16)
 
-    redirect_URL = data.contents["settings"]["redirects"]["spotify-oauth"]
-    scope = data.compileScopes(data.contents["settings"]["scopes"])
+    redirect_URL = contents["settings"]["redirects"]["spotify-oauth"]
+    scope = compileScopes(contents["settings"]["scopes"])
 
     body = {
         "response_type": 'code',
-        "client_id": data.contents["client_id"],
+        "client_id": contents["client_id"],
         "scope": scope,
         "redirect_uri": redirect_URL,
         "state": state
@@ -23,17 +23,17 @@ def OAuth_Spotify() -> dict:
 def getAccessToken(OAuthToken:str) -> dict:    
 
     url = "https://accounts.spotify.com/api/token"
-    redirect_URL = data.contents["settings"]["redirects"]["spotify-oauth"]
+    redirect_URL = contents["settings"]["redirects"]["spotify-oauth"]
 
     request_body = {
         "grant_type": "authorization_code",
         "code": OAuthToken,
         "redirect_uri": redirect_URL,
-        "client_id": data.contents["client_id"],
-        "client_secret": data.contents["client_secret"],
+        "client_id": contents["client_id"],
+        "client_secret": contents["client_secret"],
     }
     
-    r = requests.post(url, data=request_body)
+    r = requests.post(url, data = request_body)
     response = r.json()
 
     return response
@@ -56,3 +56,24 @@ def getUserPlaylists(accessToken:str,playlists: List[dict] = []) -> List[dict]:
         )
     
     return playlists
+
+def getUserInformation(accessToken:str) -> dict:
+
+    headers = {
+        "Authorization": "Bearer " + accessToken
+    }
+
+    url = "https://api.spotify.com/v1/me"
+    response = requests.get(url, headers=headers).json()
+
+    img = response["images"][0]
+
+    return {
+        "display_name"      : response["display_name"],
+        "user_id"           : response["id"],
+        "profile_picture"   : IMG(
+            img["url"],
+            img["width"],
+            img["height"]
+        )
+    }
