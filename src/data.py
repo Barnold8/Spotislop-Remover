@@ -6,10 +6,11 @@ from datetime import datetime,timedelta
 class User:
 
     def __init__(self,userPayload: dict):
-        self.access_token  = userPayload["access_token"]
-        self.refresh_token = userPayload["refresh_token"]
-        self.token_type    = userPayload["token_type"]
-        self.expiration    = User.getExpirationDateTime(userPayload["expires_in"]) if type(userPayload["expires_in"]) == int else userPayload["expires_in"]
+        self.access_token       = userPayload["access_token"]
+        self.refresh_token      = userPayload["refresh_token"]
+        self.token_type         = userPayload["token_type"]
+        self.profile_pitcure    = userPayload["profile_picture"]
+        self.expiration         = User.getExpirationDateTime(userPayload["expires_in"]) if type(userPayload["expires_in"]) == int else userPayload["expires_in"]
 
     def getExpirationDateTime(seconds: int) -> datetime:
         now = datetime.today()
