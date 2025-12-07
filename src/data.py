@@ -57,4 +57,21 @@ def compileScopes(scopes: List[str]) -> str:
 
     return " ".join(x for x in scopes)
 
+def combineDicts(*dicts):
+
+    final_dict = None
+
+
+    if len(dicts) >= 1:
+        final_dict = dicts[0]
+    else:
+        return None
+    
+    dicts[1:]
+
+    for dict in dicts:
+        final_dict = final_dict | dict
+
+    return final_dict
+
 contents = loader.loadContents() # this is on a wider scope to avoid reading from disk everytime a user needs to interact with the flask server
