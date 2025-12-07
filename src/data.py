@@ -6,9 +6,6 @@ from datetime import datetime,timedelta
 class User:
 
     def __init__(self,userPayload: dict):
-
-        print(userPayload,sys.stderr)
-
         self.access_token  = userPayload["access_token"]
         self.refresh_token = userPayload["refresh_token"]
         self.token_type    = userPayload["token_type"]
