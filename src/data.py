@@ -46,6 +46,13 @@ class User:
 
         return user
 
+class IMG:
+
+    def __init__(self,href:str,width:int,height:int):
+        self.href = href
+        self.width = width
+        self.height = height
+
 def compileScopes(scopes: List[str]) -> str:
 
     return " ".join(x for x in scopes)
