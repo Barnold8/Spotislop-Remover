@@ -6,6 +6,8 @@ import requests
 from typing import List
 from datetime import datetime
 
+# Note: add way to auto generate config file in event its not found or malformed
+
 def errorOut(dependencies:List[str]) -> None: 
 
     if len(dependencies) <= 0:
