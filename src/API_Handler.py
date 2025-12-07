@@ -38,7 +38,7 @@ def getAccessToken(OAuthToken:str) -> dict:
 
     return response
 
-def getUserPlaylists(url:str,accessToken:str,playlists: List[dict]) -> List[dict]:
+def getUserPlaylists(url:str,accessToken:str,playlists: List[dict] = []) -> List[dict]:
 
     headers = {
         "Authorization": "Bearer " + accessToken
