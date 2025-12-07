@@ -117,3 +117,13 @@ def loadContents() -> dict:
     contents["ai-bands"] = grabBands()
 
     return contents
+
+def validDictionary(keys: List[str], data:dict) -> bool:
+
+    dict_keys = data.keys()
+
+    for key in keys:
+        if key not in dict_keys:
+            return False
+        
+    return True
