@@ -19,11 +19,29 @@ class User:
         now = datetime.today()
         expiration = now + timedelta(0,seconds)
 
-    def toJson(user: 'User') -> dict:
-        pass
+    def serialize(user: 'User') -> dict:
+        
+        serialised = {
+            "access_token"  : user.access_token,
+            "refresh_token" : user.refresh_token,
+            "token_type"    : user.token_type,
+            "expires_in"    : user.expiration 
+        }
+        return serialised
 
-    def toUser(json:dict) -> 'User':
-        pass
+
+    def deserialize(data:dict) -> 'User':
+
+        user = User(
+            {
+                "access_token"  : data["access_token"],
+                "refresh_token" : data["refresh_token"],
+                "token_type"    : data["token_type"],
+                "expires_in"    : data["expires_in"]
+            }
+        )
+
+        return user
 
 def compileScopes(scopes: List[str]) -> str:
 
