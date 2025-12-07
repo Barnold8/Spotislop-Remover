@@ -38,12 +38,13 @@ def getAccessToken(OAuthToken:str) -> dict:
 
     return response
 
-def getUserPlaylists(url:str,accessToken:str,playlists: List[dict] = []) -> List[dict]:
+def getUserPlaylists(accessToken:str,playlists: List[dict] = []) -> List[dict]:
 
     headers = {
         "Authorization": "Bearer " + accessToken
     }
-    
+    url = "https://api.spotify.com/v1/me/playlists"
+
     response = requests.get(url, headers=headers).json()
     nextLink = response["next"]
     
