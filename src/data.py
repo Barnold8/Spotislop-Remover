@@ -9,7 +9,7 @@ class User:
         self.access_token       = userPayload["access_token"]
         self.refresh_token      = userPayload["refresh_token"]
         self.token_type         = userPayload["token_type"]
-        self.profile_pitcure    = userPayload["profile_picture"]
+        self.profile_picture    = userPayload["profile_picture"]
         self.expiration         = User.getExpirationDateTime(userPayload["expires_in"]) if type(userPayload["expires_in"]) == int else userPayload["expires_in"]
 
     def getExpirationDateTime(seconds: int) -> datetime:
@@ -26,11 +26,13 @@ class User:
     def serialize(user: 'User') -> dict:
         
         serialised = {
-            "access_token"  : user.access_token,
-            "refresh_token" : user.refresh_token,
-            "token_type"    : user.token_type,
-            "expires_in"    : User.serialiseTime(user.expiration) 
+            "access_token"    : user.access_token,
+            "refresh_token"   : user.refresh_token,
+            "token_type"      : user.token_type,
+            "expires_in"      : User.serialiseTime(user.expiration),
+            "profile_picture" : IMG.serialize(user.profile_picture)
         }
+
         return serialised
 
 
@@ -38,10 +40,11 @@ class User:
 
         user = User(
             {
-                "access_token"  : data["access_token"],
-                "refresh_token" : data["refresh_token"],
-                "token_type"    : data["token_type"],
-                "expires_in"    : User.deserialiseTime(data["expires_in"])
+                "access_token"    : data["access_token"],
+                "refresh_token"   : data["refresh_token"],
+                "token_type"      : data["token_type"],
+                "expires_in"      : User.deserialiseTime(data["expires_in"]),
+                "profile_picture" : IMG.deserialize(data["profile_picture"])
             }
         )
 
@@ -49,10 +52,26 @@ class User:
 
 class IMG:
 
-    def __init__(self,href:str,width:int,height:int):
-        self.href = href
+    def __init__(self,url:str,width:int,height:int):
+        self.url = url
         self.width = width
         self.height = height
+
+    def serialize(img: 'IMG') -> dict:
+
+        serialised = {
+            "url"   :img.url,
+            "width" :img.width,
+            "height":img.height
+            }
+        
+        return serialised
+
+    def deserialize(data:dict) -> 'IMG':
+
+        img = IMG(data["url"],data["width"],data["height"])
+
+        return img
 
 def compileScopes(scopes: List[str]) -> str:
 
@@ -61,7 +80,6 @@ def compileScopes(scopes: List[str]) -> str:
 def combineDicts(*dicts):
 
     final_dict = None
-
 
     if len(dicts) >= 1:
         final_dict = dicts[0]
