@@ -12,12 +12,18 @@ class User:
         self.access_token  = userPayload["access_token"]
         self.refresh_token = userPayload["refresh_token"]
         self.token_type    = userPayload["token_type"]
-        self.expiration    = User.getExpirationDateTime(userPayload["expires_in"])
+        self.expiration    = User.getExpirationDateTime(userPayload["expires_in"]) if type(userPayload["expires_in"]) == int else userPayload["expires_in"]
 
-    def getExpirationDateTime(seconds: int):
-
+    def getExpirationDateTime(seconds: int) -> datetime:
         now = datetime.today()
         expiration = now + timedelta(0,seconds)
+        return expiration
+    
+    def serialiseTime(expiration : datetime) -> str:
+        return expiration.strftime('%m/%d/%Y')
+
+    def deserialiseTime(data: str) -> datetime:
+        return datetime.strptime(data,'%m/%d/%Y')
 
     def serialize(user: 'User') -> dict:
         
@@ -25,7 +31,7 @@ class User:
             "access_token"  : user.access_token,
             "refresh_token" : user.refresh_token,
             "token_type"    : user.token_type,
-            "expires_in"    : user.expiration 
+            "expires_in"    : User.serialiseTime(user.expiration) 
         }
         return serialised
 
@@ -37,7 +43,7 @@ class User:
                 "access_token"  : data["access_token"],
                 "refresh_token" : data["refresh_token"],
                 "token_type"    : data["token_type"],
-                "expires_in"    : data["expires_in"]
+                "expires_in"    : User.deserialiseTime(data["expires_in"])
             }
         )
 
