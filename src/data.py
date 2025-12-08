@@ -10,6 +10,8 @@ class User:
         self.refresh_token      = userPayload["refresh_token"]
         self.token_type         = userPayload["token_type"]
         self.profile_picture    = userPayload["profile_picture"]
+        self.user_id            = userPayload["user_id"]
+        self.display_name       = userPayload["display_name"]
         self.expiration         = User.getExpirationDateTime(userPayload["expires_in"]) if type(userPayload["expires_in"]) == int else userPayload["expires_in"]
 
     def getExpirationDateTime(seconds: int) -> datetime:
@@ -30,7 +32,9 @@ class User:
             "refresh_token"   : user.refresh_token,
             "token_type"      : user.token_type,
             "expires_in"      : User.serialiseTime(user.expiration),
-            "profile_picture" : IMG.serialize(user.profile_picture)
+            "profile_picture" : IMG.serialize(user.profile_picture),
+            "user_id"         : user.user_id,
+            "display_name"    : user.display_name
         }
 
         return serialised
@@ -44,7 +48,9 @@ class User:
                 "refresh_token"   : data["refresh_token"],
                 "token_type"      : data["token_type"],
                 "expires_in"      : User.deserialiseTime(data["expires_in"]),
-                "profile_picture" : IMG.deserialize(data["profile_picture"])
+                "profile_picture" : IMG.deserialize(data["profile_picture"]),
+                "user_id"         : data["user_id"],
+                "display_name"    : data["display_name"]
             }
         )
 
