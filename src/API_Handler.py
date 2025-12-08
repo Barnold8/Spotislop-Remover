@@ -43,7 +43,6 @@ def getUserPlaylists(url:str,accessToken:str,playlists: List[dict] = []) -> List
     headers = {
         "Authorization": "Bearer " + accessToken
     }
-    url = "https://api.spotify.com/v1/me/playlists"
 
     response = requests.get(url, headers=headers).json()
     nextLink = response["next"]
