@@ -45,6 +45,7 @@ def spotify_display_playlists():
     user = User.deserialize(json.loads(session['messages']))
     url = "https://api.spotify.com/v1/me/playlists"
     playlists = getUserPlaylists(url,user.access_token)
+    playlists = removeNonUserPlaylists(user.user_id,playlists)
 
     return render_template("playlists.html",display_name=f"{user.display_name}'s playlists",playlists=playlists)
 
