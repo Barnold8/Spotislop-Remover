@@ -1,7 +1,7 @@
 from Url import *
 from data import contents, compileScopes,IMG
 import requests
-
+import sys
 
 def OAuth_Spotify() -> dict:
 
@@ -55,6 +55,12 @@ def getUserPlaylists(url:str,accessToken:str,playlists: List[dict] = []) -> List
         )
     
     return playlists
+
+def removeNonUserPlaylists(UID:str,playlists: List[dict]) -> List[dict]:
+
+    sieved = [playlist for playlist in playlists if playlist["owner"]["id"] == UID]
+    return sieved
+
 
 def getUserInformation(accessToken:str) -> dict:
 
