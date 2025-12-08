@@ -5,12 +5,15 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>{{display_name}}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static',filename='styles/temp.css') }}">
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static',filename='styles/playlists.css') }}">
     
 </head>
 <body>
 
-    <h1>{{display_name}}</h1>
+    <div class="wrapper">
+	<p class="fancyTextTitle">{{display_name}}</p>
+	<p class="fancyTextSubTitle">Pick what playlists you want to check for AI</p>
+    </div>
     
     <div id="flex">
         {% for playlist in playlists %}
