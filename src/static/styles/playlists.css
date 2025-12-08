@@ -14,12 +14,13 @@
   --white: hsl(0, 0%, 100%);
   --dark: hsl(0, 0%, 7%);
   --text-gray: hsl(0, 0%, 30%);
+  --title-color: #1DD05D;
 }
 
 body {
-  background: var(--light-bg);
+  background: var(--dark);
   font-family: "Space Grotesk", sans-serif;
-  color: var(--dark);
+  color: var(--light-bg);
 }
 
 h3 {
@@ -59,7 +60,8 @@ a {
   flex-basis: 100%;
   position: relative;
   padding: 24px;
-  background: #fff;
+  background: var(--dark);
+  border: solid var(--title-color);
 }
 
 .box-top {
@@ -99,14 +101,15 @@ a {
   text-align: center;
   margin-top: auto;
   padding: 16px;
-  color: #000;
+  color: var(--title-color);
   background: transparent;
-  box-shadow: 0px 0px 0px 1px black inset;
+  box-shadow: 0px 0px 0px 1px var(--title-color);
   transition: background 0.4s ease;
 }
 
 .button:hover {
-  background: var(--purple);
+  background: var(--light-gray-bg);
+  color: var(--dark)
 }
 
 .fill-one {
@@ -121,9 +124,6 @@ img{
 
   display: block;
   margin: auto;
-
-
-
 }
 
 /* RESPONSIVE QUERIES */
@@ -139,36 +139,36 @@ img{
 	display: flex;
 	flex-direction: column;
 	gap: 3em;
+  margin-top: 5%;
 }
 
 .fancyTextTitle {
-	font-size: 1em;
+	font-size: 4em;
 	text-decoration: none;
 	text-align: center;
 	text-transform: uppercase;
 	line-height: 1;
 	color: transparent;
-	-webkit-text-stroke: 1.5px yellow;
-	text-shadow: 0 0 0 #fff;
+	-webkit-text-stroke: 1.5px var(--title-color);
+	text-shadow: 0 0 0 var(--text-gray);
+	transition: all 250ms;
+}
+
+.fancyTextSubTitle{
+	font-size: 3em;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 1;
+	color: transparent;
+	-webkit-text-stroke: 1.5px var(--title-color);
+	text-shadow: 0 0 0 var(--text-gray);
 	transition: all 250ms;
 }
 
 .fancyTextTitle:hover {
 	text-shadow: 4px 4px 0 #fff;
 	transform: translate(-2px, -2px)
-}
-
-.fancyTextSubTitle{
-	font-size: 1em;
-	text-decoration: none;
-	text-align: center;
-	text-transform: uppercase;
-	line-height: 1;
-	color: transparent;
-	-webkit-text-stroke: 1.5px yellow;
-	text-shadow: 0 0 0 #fff;
-	transition: all 250ms;
-
 }
 
 .fancyTextSubTitle:hover {
