@@ -12,13 +12,19 @@ function fillDescriptions(){
     }
 }
 
-
-function alreadyInList(element,list){
+function alreadyInList(element,list,removal=""){
 
     for (let i = 0; i < list.length; i++) {
-        if(list[i] === element){
+        tempVar = list[i]
+
+        if(removal.length >=1){
+            tempVar = tempVar.replace(removal,"")
+        }
+        
+        if(tempVar === element){
             return true
         }
+    
     }
     
     return false;
@@ -51,11 +57,25 @@ function grabListItems(id,tag){
 
 }
 
+function constrainString(string,limit=5){
+
+    splitAt = (index, xs) => [xs.slice(0, index), xs.slice(index)] // very cool and useful thank you https://stackoverflow.com/questions/16441770/insert-character-into-string-at-index
+
+    if(string.length >= limit){
+        return splitAt(limit,string)[0] + "..."
+    }
+    return string
+}
+
 function addToCart(name){
 
-    if(!alreadyInList(name,grabListItems("menu","li"))){
+    const CHAR_CONSTRAINT = 10
+    prevName = name
+    name = constrainString(name,CHAR_CONSTRAINT)
+
+    if(!alreadyInList(name,grabListItems("menu","li"),"\nX")){
         
-        toast(`Added ${name}`,3)
+        toast(`Added ${prevName}`,3)
 
         const newListItem    = document.createElement("li")
 
@@ -65,24 +85,20 @@ function addToCart(name){
         const newPlayList    = document.createElement("label")
         const newRemovalText = document.createElement("label")
 
-        const breakItem      = document.createElement("br")
-
-        newRemovalText.classList  = "remove"
-        playListItem.classList  = "listItem"
-        removalItem.classList  = "listItem"
+        newRemovalText.classList = "remove"
+        playListItem.classList   = "listItem"
+        removalItem.classList    = "listItem"
 
         cart = document.getElementById("menu")
 
         newRemovalText.innerText = "X"
-        newPlayList.innerText    = name
+        newPlayList.innerText    = constrainString(name,CHAR_CONSTRAINT)
 
         playListItem.appendChild(newPlayList)
         removalItem.appendChild(newRemovalText)
 
         newListItem.appendChild(playListItem)
         newListItem.appendChild(removalItem)
-        newListItem.appendChild(breakItem)
-        newListItem.appendChild(breakItem)
 
         cart.appendChild(newListItem)
 

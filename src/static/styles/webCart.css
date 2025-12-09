@@ -121,7 +121,7 @@ p {
 #menu {
   overflow-y:auto;
   position: absolute;
-  max-width: 400px;
+  max-width: 500px;
   width: 100vw;
   max-height: 100vh;
   margin: -100px 0 0 0;
