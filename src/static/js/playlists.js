@@ -13,3 +13,20 @@ function fillDescriptions(){
 }
 
 fillDescriptions()
+
+
+function addToCart(name){
+
+    const newListItem = document.createElement("li");
+    const newLink = document.createElement("a");
+    const newLabel = document.createElement("label");
+
+    cart = document.getElementById("menu")
+
+    newLabel.innerText = name
+
+    newLink.appendChild(newLabel)
+    newListItem.appendChild(newLink)
+    cart.appendChild(newListItem)
+
+}

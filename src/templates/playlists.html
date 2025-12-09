@@ -22,8 +22,8 @@
             <ul id="menu">
 
             <li>
-                <a href="#">
-                <label for="menuCheckbox" onclick="this.parentNode.click();">Home</label>
+                <a >
+                    <label >Playlists to scan and remove AI from</label>
                 </a>
             </li>
 
@@ -54,7 +54,7 @@
                 
                 <p class="description">{{playlist["description"]}}</p>
                 </div>
-                <a href="#" class="button">Add to check list</a>
+                <a class="button" onclick="addToCart(this.name)" name='{{playlist["name"]}}'>Add to check list</a>
             </div>
 
         {% endfor %}
