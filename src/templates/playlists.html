@@ -7,9 +7,11 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static',filename='styles/playlists.css') }}">
     <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static',filename='styles/webCart.css') }}">
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static',filename='styles/toast.css') }}">
     
 </head>
 <body>
+    <div id="snackbar">...</div>
     <nav role="navigation">
         <div id="menuToggle">
 
@@ -18,16 +20,12 @@
             <span></span>
             <span></span>
             
-
             <ul id="menu">
 
-            <li>
-                <a >
-                    <label >Playlists to scan and remove AI from</label>
-                </a>
-            </li>
+                <h3>Playlists to scan</h3>
 
             </ul>
+            
         </div>
     </nav>
     <div class="wrapper">
@@ -58,6 +56,12 @@
             </div>
 
         {% endfor %}
+<div class="footer">
+  <a class="footer-button" onclick="scanPlaylists()" >>>> Scan playlists <<<</a>
+</div>
+
+
 <script src="{{url_for('static', filename='js/playlists.js')}}"></script>
+
 </body>
 </html>
