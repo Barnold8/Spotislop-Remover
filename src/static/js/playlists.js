@@ -100,6 +100,8 @@ function addToCart(name){
         newListItem.appendChild(playListItem)
         newListItem.appendChild(removalItem)
 
+        newListItem.setAttribute("name",prevName) // hacky way to allow actual names through
+
         cart.appendChild(newListItem)
 
     }else{
@@ -112,6 +114,12 @@ function scanPlaylists(){
 
     // Redirect to route that scans playlists and package list in some data structure to route
 
+    list = document.getElementById("menu")
+    list = list.getElementsByTagName("li")
+
+    for (let item of list) {
+        console.log(item.getAttribute("name"))
+    }
 }
 
 fillDescriptions()
