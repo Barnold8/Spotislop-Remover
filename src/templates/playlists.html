@@ -6,11 +6,33 @@
     <title>{{display_name}}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static',filename='styles/playlists.css') }}">
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static',filename='styles/webCart.css') }}">
     
 </head>
 <body>
+    <nav role="navigation">
+        <div id="menuToggle">
 
+            <input type="checkbox" id="menuCheckbox" />
+            <span></span>
+            <span></span>
+            <span></span>
+            
+
+            <ul id="menu">
+
+            <li>
+                <a href="#">
+                <label for="menuCheckbox" onclick="this.parentNode.click();">Home</label>
+                </a>
+            </li>
+
+            </ul>
+        </div>
+    </nav>
     <div class="wrapper">
+
+    <!--                                             Comment here just to make clear disconnect from sidebar code                                                -->
 	<p class="fancyTextTitle">{{display_name}}</p>
 	<p class="fancyTextSubTitle">Pick what playlists you want to check for AI</p>
     </div>
