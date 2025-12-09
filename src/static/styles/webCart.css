@@ -36,14 +36,10 @@ p {
 #menuToggle a
 {
   text-decoration: none;
-  color: #232323;
+  color: #fff;
+  opacity: 1;
   
   transition: color 0.3s ease;
-}
-
-#menuToggle a:hover
-{
-  color: tomato;
 }
 
 #menuToggle input {
@@ -132,7 +128,7 @@ p {
   padding: 50px;
   padding-top: 125px;
   right: -100px;
-  
+
   box-sizing: border-box;
   overflow-y: auto;
   background: #43ab5e;
@@ -151,6 +147,7 @@ p {
 {
   padding: 10px 0;
   font-size: 22px;
+  color:#cdcdcd;
 }
 
 #menu li label
@@ -163,5 +160,5 @@ p {
  */
 #menuToggle input:checked ~ ul {
   transform: none;
-  opacity: 0.7;
+  opacity: 0.85;
 }
