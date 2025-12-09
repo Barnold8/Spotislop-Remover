@@ -147,12 +147,18 @@ p {
 {
   padding: 10px 0;
   font-size: 22px;
-  color:#cdcdcd;
+  color:#fff;
 }
 
 #menu li label
 {
   cursor: pointer;
+}
+
+.listItem{
+  float:left;
+  width:50%;
+
 }
 
 /*
@@ -161,4 +167,16 @@ p {
 #menuToggle input:checked ~ ul {
   transform: none;
   opacity: 0.85;
+}
+
+.remove{
+
+  text-align: right;
+  margin-left: 4%;
+}
+
+.remove:hover{
+
+  color:red;
+
 }

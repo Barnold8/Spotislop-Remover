@@ -57,16 +57,33 @@ function addToCart(name){
         
         toast(`Added ${name}`,3)
 
-        const newListItem = document.createElement("li");
-        const newLink = document.createElement("a");
-        const newLabel = document.createElement("label");
+        const newListItem    = document.createElement("li")
+
+        const playListItem   = document.createElement("div")
+        const removalItem    = document.createElement("div")
+
+        const newPlayList    = document.createElement("label")
+        const newRemovalText = document.createElement("label")
+
+        const breakItem      = document.createElement("br")
+
+        newRemovalText.classList  = "remove"
+        playListItem.classList  = "listItem"
+        removalItem.classList  = "listItem"
 
         cart = document.getElementById("menu")
 
-        newLabel.innerText = name
+        newRemovalText.innerText = "X"
+        newPlayList.innerText    = name
 
-        newLink.appendChild(newLabel)
-        newListItem.appendChild(newLink)
+        playListItem.appendChild(newPlayList)
+        removalItem.appendChild(newRemovalText)
+
+        newListItem.appendChild(playListItem)
+        newListItem.appendChild(removalItem)
+        newListItem.appendChild(breakItem)
+        newListItem.appendChild(breakItem)
+
         cart.appendChild(newListItem)
 
     }else{
