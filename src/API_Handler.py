@@ -1,6 +1,7 @@
 from Url import *
-from data import contents, compileScopes,IMG
+from data import contents, compileScopes,IMG,Playlist
 import requests
+import json
 import sys
 
 def OAuth_Spotify() -> dict:
@@ -99,4 +100,40 @@ def getSongs(url:str,accessToken:str,songs = []) -> dict:
         )
     
     return songs
+
+def removeAI(playlists: List[Playlist],accessToken:str) -> None:
+
+    url = "https://api.spotify.com/v1/playlists/"
+
+    headers = {
+            "Authorization": "Bearer " + accessToken,
+            'Content-Type' : 'application/json' 
+        }
+
+    for playlist in playlists:
+        playlist.removeHuman(contents["ai-bands"]["generative"])
+  
+        body = {
+            "tracks": [
+                   
+                ],
+            "snapshot_id": playlist.snapshot_id
+            }
+        for track in playlist.tracks:
+            body["tracks"].append(
+                {
+                    "uri": track["track"]["uri"]
+                }
+            )
+
+        response = requests.delete(
+            url, 
+            data=json.dumps(body), 
+            headers=headers,
+        )
+
+        print(body,sys.stderr)
+        print(response,sys.stderr)
+
+        print(response.text,sys.stderr)
 
