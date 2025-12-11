@@ -1,7 +1,7 @@
 from flask import Flask,redirect,render_template,request,session 
 from Url import *
 from API_Handler import *
-from data import User, combineDicts,idsToArray
+from data import User, Playlist, combineDicts,idsToArray
 import json
 import sys
 
@@ -33,8 +33,7 @@ def spotify_oauth():
     user_information = getAccessToken(userCode)
     user_information = combineDicts(user_information,getUserInformation(user_information["access_token"]))
     user = User(user_information)
-    
-    # messages = json.dumps(User.serialize(user))
+
     messages = User.serialize(user)
     session['messages'] = messages
 
@@ -42,8 +41,6 @@ def spotify_oauth():
 
 @app.route("/spotify/playlists")
 def spotify_display_playlists():
-
-    #Maybe add playlists to user so it doesnt have to be grabbed from the API again which is slow and also maybe embed playlist IDS into html elements
 
     user = User.deserialize(session['messages'])
     url = "https://api.spotify.com/v1/me/playlists"
@@ -59,8 +56,18 @@ def process_playlists():
 
     ids = idsToArray(request.args.get("ids"))
     user = User.deserialize(session['messages'])
+    playlists = []
 
     for id in ids:
-        getSongs(id,user.access_token)
+        
+        playlistIDS = id.split("|") # angry i had to do this because of spotify needing a fucking stupid snapshot id for whatever reason uprooting my code to force this upon it
+        
+        songs = getSongs(f"https://api.spotify.com/v1/playlists/{playlistIDS[0]}/tracks",user.access_token)
+        playlist = Playlist(playlistIDS[0],songs,playlistIDS[1])
+        playlists.append(playlist)
 
-    return f"<html><h1>IDS</h1><p>{ids}</p></html>"
+    removeAI(playlists,user.access_token)
+
+    session['messages'] = User.serialize(user)
+
+    return f"<html><h1>IDS</h1><p>f</p></html>"

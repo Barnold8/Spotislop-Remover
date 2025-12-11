@@ -55,6 +55,9 @@ def getUserPlaylists(url:str,accessToken:str,playlists: List[dict] = []) -> List
             playlists + response["items"]
         )
     
+    if len(playlists) == 0 and len(response["items"])  >=1:
+        playlists = response["items"]
+
     return playlists
 
 def removeNonUserPlaylists(UID:str,playlists: List[dict]) -> List[dict]:
@@ -88,17 +91,22 @@ def getSongs(url:str,accessToken:str,songs = []) -> dict:
     headers = {
         "Authorization": "Bearer " + accessToken
     }
-
+ 
     response = requests.get(url, headers=headers).json()
-    nextLink = response["tracks"]["next"]
-    
+    nextLink = response["next"]
+
     if nextLink != None:
         return getUserPlaylists(
             nextLink,
             accessToken,
-            songs + response["tracks"]["items"]
+            songs + response["items"]
         )
     
+    if len(songs) == 0 and len(response["items"]) >=1:
+        songs = response["items"]
+
+    print(f"songs {songs}")
+
     return songs
 
 def removeAI(playlists: List[Playlist],accessToken:str) -> None:
