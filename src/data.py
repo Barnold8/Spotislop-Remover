@@ -81,21 +81,26 @@ class IMG:
 
 class Playlist:
     
-    def __init__(self, ID,tracks):
+    def __init__(self, ID:str,tracks:dict):
         
         self.ID = ID
         self.tracks = tracks
 
-    def removeHuman(self,AI):
+    def removeHuman(self,AI:List[dict]) -> None:
         # dystopian ass name
     
         tracks = []
+        names = [name["name"] for name in AI]
 
         for track in self.tracks:
-            if track in AI:
+            artists = grabArtistsNames(track["track"]["artists"])
+            if any(item in names for item in artists):
                 tracks.append(track)
+        
+        for track in tracks:
+            print(track["track"]["artists"])
 
-        self.tracks
+        self.tracks = tracks
 
 
 def compileScopes(scopes: List[str]) -> str:
@@ -120,5 +125,9 @@ def combineDicts(*dicts):
 
 def idsToArray(ids:str) -> List[str]:
     return [id for id in ids.split(",")]
+
+def grabArtistsNames(artists:List[dict]):
+    return [artist["name"] for artist in artists]
+
 
 contents = loader.loadContents() # this is on a wider scope to avoid reading from disk everytime a user needs to interact with the flask server
