@@ -81,10 +81,11 @@ class IMG:
 
 class Playlist:
     
-    def __init__(self, ID:str,tracks:dict):
+    def __init__(self, ID:str,tracks:dict,snapshot_id: str):
         
         self.ID = ID
         self.tracks = tracks
+        self.snapshot_id = snapshot_id
 
     def removeHuman(self,AI:List[dict]) -> None:
         # dystopian ass name
