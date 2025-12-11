@@ -67,7 +67,7 @@ function constrainString(string,limit=5){
     return string
 }
 
-function addToCart(name,id){
+function addToCart(name,id,snapshot_id){
 
     const CHAR_CONSTRAINT = 10
     prevName = name
@@ -100,8 +100,10 @@ function addToCart(name,id){
         newListItem.appendChild(playListItem)
         newListItem.appendChild(removalItem)
 
-        newListItem.setAttribute("id",id)
+       
         newListItem.setAttribute("name",prevName) // hacky way to allow actual names through
+        newListItem.setAttribute("id",id)
+        newListItem.setAttribute("snapshot_id",snapshot_id)
 
         cart.appendChild(newListItem)
 
