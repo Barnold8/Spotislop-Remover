@@ -37,9 +37,9 @@ def spotify_oauth():
     messages = json.dumps(User.serialize(user))
     session['messages'] = messages
 
-    return redirect("/spotify/display-playlists")
+    return redirect("/spotify/playlists")
 
-@app.route("/spotify/display-playlists")
+@app.route("/spotify/playlists")
 def spotify_display_playlists():
 
     #Maybe add playlists to user so it doesnt have to be grabbed from the API again which is slow and also maybe embed playlist IDS into html elements
