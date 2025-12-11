@@ -71,7 +71,7 @@ def writeBands(raw: dict | List[dict],bandsPath:str,lastUpdatedPath):
     with open(lastUpdatedPath,"w") as file:
         file.write(datetime.today().strftime('%Y-%m-%d'))
 
-def grabBands():
+def grabBands() -> dict:
     
     ai_bandsJson     = None
     relativeContents = "../contents"
@@ -96,11 +96,17 @@ def grabBands():
         if difference.days >= maxDays:
             ai_bandsJson = downloadRaw(link)
             writeBands(ai_bandsJson,listPath,datePath)
+        else:
+            with open("../contents/ai-bands.json") as ai_bands:
+                ai_bandsJson = json.load(ai_bands)
 
     else:
         ai_bandsJson = downloadRaw(link)
         writeBands(ai_bandsJson,listPath,datePath)
     
+    if type(ai_bandsJson) != dict:
+        ai_bandsJson = json.load(ai_bandsJson)
+
     return ai_bandsJson
 
 def loadContents() -> dict:
