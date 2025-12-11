@@ -88,4 +88,17 @@ Scopes in this app are used to tell the spotify API what kind of permissions we 
 
 ### Security
 
+#### About
 This portion is partly security but it's more of a way for the app to retain session data across routes for a given user. This allows the web app to remember who the user is across web pages on the app and circumvents the user having to log in on every page. This is a security issue because the user holds onto relevant information to their account access like their [access_token](https://getstream.io/glossary/api-token/) which, if a bad actor gets their hands on, could result in data loss, destruction of their overall profile and potential theft of user data. The way session is held is with a secret key, the secret key is to ensure that the session cookie can be signed and the user can be confirmed as themselves. More can be found [here](https://flask.palletsprojects.com/en/stable/config/#:~:text=Default%3A%20None-,SECRET_KEY,-%C2%B6)
+
+#### key-length
+
+This integer tells the app to check if the SERVER_SECRET is a certain length. If the length is not met, the app refuses to run. It is recommended to be at least 16 characters but the default is 32
+
+#### key-refresh
+
+This integer tells the app how many days a SERVER_SECRET can exist before it is refreshed. The integer is in days and thus the default is 30 days. It is recommended to keep the integer <= 30
+
+#### key-refreshed-on
+
+This string tells the app when the key was refreshed. If the current date the app boots up is after the **key-refresh** period, a new key is generated. 
