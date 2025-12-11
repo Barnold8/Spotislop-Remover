@@ -105,8 +105,6 @@ def getSongs(url:str,accessToken:str,songs = []) -> dict:
     if len(songs) == 0 and len(response["items"]) >=1:
         songs = response["items"]
 
-    print(f"songs {songs}")
-
     return songs
 
 def removeAI(playlists: List[Playlist],accessToken:str) -> None:
@@ -140,4 +138,5 @@ def removeAI(playlists: List[Playlist],accessToken:str) -> None:
             headers=headers,
         )
 
+        print(response,sys.stderr)
         
