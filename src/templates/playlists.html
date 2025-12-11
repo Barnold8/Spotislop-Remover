@@ -52,7 +52,7 @@
                 
                 <p class="description">{{playlist["description"]}}</p>
                 </div>
-                <a class="button" onclick="addToCart(this.name)" name='{{playlist["name"]}}'>Add to check list</a>
+                <a class="button" onclick="addToCart(this.name,this.id)" id="{{playlist['id']}}" name='{{playlist["name"]}}'>Add to check list</a>
             </div>
 
         {% endfor %}

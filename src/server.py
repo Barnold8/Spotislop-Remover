@@ -42,6 +42,8 @@ def spotify_oauth():
 @app.route("/spotify/display-playlists")
 def spotify_display_playlists():
 
+    #Maybe add playlists to user so it doesnt have to be grabbed from the API again which is slow and also maybe embed playlist IDS into html elements
+
     user = User.deserialize(json.loads(session['messages']))
     url = "https://api.spotify.com/v1/me/playlists"
     playlists = getUserPlaylists(url,user.access_token)
