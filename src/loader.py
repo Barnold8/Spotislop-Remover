@@ -64,11 +64,11 @@ def writeBands(raw: dict | List[dict],bandsPath:str,lastUpdatedPath):
     with open(lastUpdatedPath,"w") as file:
         file.write(datetime.today().strftime('%Y-%m-%d'))
 
-def downloadJson(link:str,listPath:str,datePath:str) -> None:
+def downloadJson(link:str,listPath:str,datePath:str) -> str:
 
     ai_bandsJson = downloadRaw(link)
-
     writeBands(ai_bandsJson,listPath,datePath)
+    return {"generative":ai_bandsJson}
 
 def grabBands() -> dict:
     
@@ -92,17 +92,19 @@ def grabBands() -> dict:
         difference = today - oldDate
         
         if difference.days >= maxDays:
-            downloadJson(link,listPath,datePath)
+            ai_bandsJson = downloadJson(link,listPath,datePath)
         else:
-            with open("../contents/ai-bands.json") as ai_bands:
-                if len(ai_bands.read()) <=0:
-                    downloadJson(link,listPath,datePath)
+            with open(listPath) as ai_bands:
+                raw_contents = ai_bands.read()
+                ai_bands.seek(0)
+                if len(raw_contents) <= 0:
+                    ai_bandsJson = downloadJson(link,listPath,datePath)
                 else:
                     ai_bandsJson = json.load(ai_bands)
 
     else:
-        downloadJson(link,listPath,datePath)
-        
+        ai_bandsJson = downloadJson(link,listPath,datePath)
+
     return ai_bandsJson
 
 def loadContents() -> dict:
