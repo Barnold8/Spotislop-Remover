@@ -1,7 +1,7 @@
 from flask import Flask,redirect,render_template,request,session 
 from Url import *
 from API_Handler import *
-from data import User, combineDicts
+from data import User, combineDicts,idsToArray
 import json
 import sys
 
@@ -34,7 +34,8 @@ def spotify_oauth():
     user_information = combineDicts(user_information,getUserInformation(user_information["access_token"]))
     user = User(user_information)
     
-    messages = json.dumps(User.serialize(user))
+    # messages = json.dumps(User.serialize(user))
+    messages = User.serialize(user)
     session['messages'] = messages
 
     return redirect("/spotify/playlists")
@@ -44,12 +45,22 @@ def spotify_display_playlists():
 
     #Maybe add playlists to user so it doesnt have to be grabbed from the API again which is slow and also maybe embed playlist IDS into html elements
 
-    user = User.deserialize(json.loads(session['messages']))
+    user = User.deserialize(session['messages'])
     url = "https://api.spotify.com/v1/me/playlists"
     playlists = getUserPlaylists(url,user.access_token)
     playlists = removeNonUserPlaylists(user.user_id,playlists)
 
+    session['messages'] = User.serialize(user)
+    
     return render_template("playlists.html",display_name=f"{user.display_name}'s playlists",playlists=playlists)
 
+@app.route("/spotify/playlists/scan")
+def process_playlists():
 
+    ids = idsToArray(request.args.get("ids"))
+    user = User.deserialize(session['messages'])
 
+    for id in ids:
+        getSongs(id,user.access_token)
+
+    return f"<html><h1>IDS</h1><p>{ids}</p></html>"
