@@ -133,10 +133,7 @@ def removeAI(playlists: List[Playlist],accessToken:str) -> None:
             )
 
         response = requests.delete(
-            f"{url}{playlist.ID}", 
+            f"{url}{playlist.ID}/tracks",
             data=json.dumps(body), 
             headers=headers,
         )
-
-        print(response,sys.stderr)
-        
