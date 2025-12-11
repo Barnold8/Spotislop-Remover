@@ -11,6 +11,8 @@
     
 </head>
 <body>
+
+    
     <div id="snackbar">...</div>
     <nav role="navigation">
         <div id="menuToggle">
@@ -51,17 +53,20 @@
                 </div>
                 
                 <p class="description">{{playlist["description"]}}</p>
-                </div>
-                <a class="button" onclick="addToCart(this.name,this.id)" id="{{playlist['id']}}" name='{{playlist["name"]}}'>Add to check list</a>
+                </div> 
+                <a class="button" onclick="addToCart(this.name,this.id,this.getAttribute('snapshot-id'))"  id='{{playlist["id"]}}' name='{{playlist["name"]}}' snapshot-id='{{playlist["snapshot_id"]}}' >Add to check list</a>
             </div>
 
         {% endfor %}
 <div class="footer">
-  <a class="footer-button" onclick="scanPlaylists()" >>>> Scan playlists <<<</a>
+  <a class="footer-button" onclick="scanPlaylists()" >>>> Scan playlists <<< </a>
 </div>
 
 
 <script src="{{url_for('static', filename='js/playlists.js')}}"></script>
+
+
+
 
 </body>
 </html>
