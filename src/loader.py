@@ -56,20 +56,19 @@ def downloadRaw(link:str)->str:
 
 def writeBands(raw: dict | List[dict],bandsPath:str,lastUpdatedPath):
 
-    contents = raw
-    
-    if isinstance(contents,list):
-        contents = contents[0]
-    elif type(contents) == dict:
-        pass
-    else:
-        return
-    
+    json_main = {"generative":raw} # dictionary with list of AI "artists"
+
     with open(bandsPath,"w") as file:
-        json.dump(contents,file)
+        json.dump(json_main,file)
 
     with open(lastUpdatedPath,"w") as file:
         file.write(datetime.today().strftime('%Y-%m-%d'))
+
+def downloadJson(link:str,listPath:str,datePath:str) -> None:
+
+    ai_bandsJson = downloadRaw(link)
+
+    writeBands(ai_bandsJson,listPath,datePath)
 
 def grabBands() -> dict:
     
@@ -80,7 +79,6 @@ def grabBands() -> dict:
     link             = "https://raw.githubusercontent.com/romiem/ai-bands/refs/heads/main/dist/ai-bands.json"
     dateFormat       = "%Y-%m-%d"
     maxDays          = 30 
-
 
     if os.path.isfile(listPath) and os.path.isfile(datePath):
 
@@ -94,19 +92,17 @@ def grabBands() -> dict:
         difference = today - oldDate
         
         if difference.days >= maxDays:
-            ai_bandsJson = downloadRaw(link)
-            writeBands(ai_bandsJson,listPath,datePath)
+            downloadJson(link,listPath,datePath)
         else:
             with open("../contents/ai-bands.json") as ai_bands:
-                ai_bandsJson = json.load(ai_bands)
+                if len(ai_bands.read()) <=0:
+                    downloadJson(link,listPath,datePath)
+                else:
+                    ai_bandsJson = json.load(ai_bands)
 
     else:
-        ai_bandsJson = downloadRaw(link)
-        writeBands(ai_bandsJson,listPath,datePath)
-    
-    if type(ai_bandsJson) != dict:
-        ai_bandsJson = json.load(ai_bandsJson)
-
+        downloadJson(link,listPath,datePath)
+        
     return ai_bandsJson
 
 def loadContents() -> dict:
