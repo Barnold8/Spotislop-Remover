@@ -97,9 +97,6 @@ class Playlist:
             if any(item in names for item in artists):
                 tracks.append(track)
         
-        for track in tracks:
-            print(track["track"]["artists"])
-
         self.tracks = tracks
 
 
