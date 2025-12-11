@@ -112,13 +112,13 @@ def removeAI(playlists: List[Playlist],accessToken:str) -> None:
 
     for playlist in playlists:
         playlist.removeHuman(contents["ai-bands"]["generative"])
-  
         body = {
             "tracks": [
                    
                 ],
             "snapshot_id": playlist.snapshot_id
             }
+        
         for track in playlist.tracks:
             body["tracks"].append(
                 {
@@ -127,13 +127,9 @@ def removeAI(playlists: List[Playlist],accessToken:str) -> None:
             )
 
         response = requests.delete(
-            url, 
+            f"{url}{playlist.ID}", 
             data=json.dumps(body), 
             headers=headers,
         )
 
-        print(body,sys.stderr)
-        print(response,sys.stderr)
-
-        print(response.text,sys.stderr)
 
