@@ -61,7 +61,6 @@ def removeNonUserPlaylists(UID:str,playlists: List[dict]) -> List[dict]:
     sieved = [playlist for playlist in playlists if playlist["owner"]["id"] == UID]
     return sieved
 
-
 def getUserInformation(accessToken:str) -> dict:
 
     headers = {
@@ -82,3 +81,22 @@ def getUserInformation(accessToken:str) -> dict:
             img["height"]
         )
     }
+
+def getSongs(url:str,accessToken:str,songs = []) -> dict:
+
+    headers = {
+        "Authorization": "Bearer " + accessToken
+    }
+
+    response = requests.get(url, headers=headers).json()
+    nextLink = response["tracks"]["next"]
+    
+    if nextLink != None:
+        return getUserPlaylists(
+            nextLink,
+            accessToken,
+            songs + response["tracks"]["items"]
+        )
+    
+    return songs
+
