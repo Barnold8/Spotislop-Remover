@@ -113,14 +113,17 @@ function addToCart(name,id){
 
 function scanPlaylists(){
 
-    // Redirect to route that scans playlists and package list in some data structure to route
-
     list = document.getElementById("menu")
     list = list.getElementsByTagName("li")
 
+    ids = []
+
     for (let item of list) {
-        console.log(item.getAttribute("name"))
+        ids.push(item.getAttribute("id"))
     }
+
+    window.location.href = `${window.location.href}/scan?ids=${ids}`
+
 }
 
 fillDescriptions()
