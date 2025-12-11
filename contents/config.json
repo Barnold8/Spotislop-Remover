@@ -10,6 +10,7 @@
     ],
     "security": {
         "key-length": 32,
+        "key-refresh" : 30,
         "key-refreshed-on": "2025/12/04"
     }
 }
