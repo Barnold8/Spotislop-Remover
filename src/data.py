@@ -79,6 +79,25 @@ class IMG:
 
         return img
 
+class Playlist:
+    
+    def __init__(self, ID,tracks):
+        
+        self.ID = ID
+        self.tracks = tracks
+
+    def removeHuman(self,AI):
+        # dystopian ass name
+    
+        tracks = []
+
+        for track in self.tracks:
+            if track in AI:
+                tracks.append(track)
+
+        self.tracks
+
+
 def compileScopes(scopes: List[str]) -> str:
 
     return " ".join(x for x in scopes)
