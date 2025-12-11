@@ -121,9 +121,9 @@ function scanPlaylists(){
     ids = []
 
     for (let item of list) {
-        ids.push(item.getAttribute("id"))
+        ids.push( `${item.getAttribute("id")}|${item.getAttribute("snapshot_id")}`)
     }
-
+    
     window.location.href = `${window.location.href}/scan?ids=${ids}`
 
 }
