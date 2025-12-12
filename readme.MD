@@ -55,6 +55,42 @@ These are required to communicate with the API in the [authentication](https://d
     1. In the redirect URIs section, you will need to add the **"redirects"** urls from the **config.json** file found in the **\<contents>** directory. If you wish to use another IP and port, you will need to change these in the config file and also update the app.run line in [main.py](src/main.py)
 
 
+Your app structure should look like
+
+
+```.
+├── contents
+│   ├── ai-bands-lastUpdated.txt
+│   ├── ai-bands.json
+│   ├── CLIENT_ID
+│   ├── CLIENT_SECRET
+│   ├── config.json
+│   ├── requirements.txt
+│   └── SERVER_SECRET
+├── src
+│   ├── static
+│   │    ├── images
+│   │    │   └── spotify.png
+│   │    ├── js
+│   │    │   └── playlists.js
+│   │    ├── styles
+│   │    │   ├── playlists.css
+│   │    │   ├── toast.css
+│   │    │   └── webCart.css
+├── templates
+│   ├── error.html
+│   ├── index.html
+│   └── playlists.html
+├── API_Handler.py
+├── data.py
+├── loader.py
+├── main.py
+├── satisfiedLibs.py
+├── security.py
+├── server.py
+├── Url.py
+```
+
 ## Understanding config.json
 
 When you clone the app, you will be given a file that looks like the following:
