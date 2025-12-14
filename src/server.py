@@ -20,7 +20,6 @@ def validateUserSession() -> bool:
     return True
 
 def validateUserAuth(userCode: str) -> bool:    # for clarification, this is used to verify the users auth PRE access token grant
-    
     MAXLEN    = 306
     if userCode == None:
         return False
