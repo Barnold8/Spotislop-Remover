@@ -7,6 +7,23 @@ import sys
 
 app = Flask(__name__)
 
+def validateUser() -> bool:
+
+    sessionKeys = session.keys()
+    expectedUserKeys = ['access_token', 'display_name', 'expires_in', 'profile_picture', 'refresh_token', 'token_type', 'user_id']
+
+    if "messages" not in sessionKeys:
+        return False
+    if set(session["messages"].keys()) != set(expectedUserKeys):
+        return False
+
+    return True
+
+@app.route("/test")
+def test():
+    validateUser()
+    return render_template("index.html",contents="Hello")
+
 @app.route("/")
 def index():
     return render_template("index.html",contents="Hello")
@@ -42,32 +59,39 @@ def spotify_oauth():
 @app.route("/spotify/playlists")
 def spotify_display_playlists():
 
-    user = User.deserialize(session['messages'])
-    url = "https://api.spotify.com/v1/me/playlists"
-    playlists = getUserPlaylists(url,user.access_token)
-    playlists = removeNonUserPlaylists(user.user_id,playlists)
+    if validateUser():
 
-    session['messages'] = User.serialize(user)
-    
-    return render_template("playlists.html",display_name=f"{user.display_name}'s playlists",playlists=playlists)
+        user = User.deserialize(session['messages'])
+        url = "https://api.spotify.com/v1/me/playlists"
+        playlists = getUserPlaylists(url,user.access_token)
+        playlists = removeNonUserPlaylists(user.user_id,playlists)
+
+        session['messages'] = User.serialize(user)
+        
+        return render_template("playlists.html",display_name=f"{user.display_name}'s playlists",playlists=playlists)
+    else:
+        return render_template("error.html")
 
 @app.route("/spotify/playlists/scan")
 def process_playlists():
 
-    ids = idsToArray(request.args.get("ids"))
-    user = User.deserialize(session['messages'])
-    playlists = []
+    if validateUser():
 
-    for id in ids:
-        
-        playlistIDS = id.split("|") # angry i had to do this because of spotify needing a fucking stupid snapshot id for whatever reason uprooting my code to force this upon it
-        
-        songs = getSongs(f"https://api.spotify.com/v1/playlists/{playlistIDS[0]}/tracks",user.access_token)
-        playlist = Playlist(playlistIDS[0],songs,playlistIDS[1])
-        playlists.append(playlist)
+        ids = idsToArray(request.args.get("ids"))
+        user = User.deserialize(session['messages'])
+        playlists = []
 
-    removeAI(playlists,user.access_token)
+        for id in ids:
+            
+            playlistIDS = id.split("|") # angry i had to do this because of spotify needing a fucking stupid snapshot id for whatever reason uprooting my code to force this upon it
+            
+            songs = getSongs(f"https://api.spotify.com/v1/playlists/{playlistIDS[0]}/tracks",user.access_token)
+            playlist = Playlist(playlistIDS[0],songs,playlistIDS[1])
+            playlists.append(playlist)
 
-    session['messages'] = User.serialize(user)
+        removeAI(playlists,user.access_token)
 
-    return f"<html><h1>IDS</h1><p>f</p></html>"
+        session['messages'] = User.serialize(user)
+
+        return f"<html><h1>IDS</h1><p>f</p></html>"
+    return render_template("error.html")
