@@ -7,7 +7,7 @@ import sys
 
 app = Flask(__name__)
 
-def validateUser() -> bool:
+def validateUserSession() -> bool:
 
     sessionKeys = session.keys()
     expectedUserKeys = ['access_token', 'display_name', 'expires_in', 'profile_picture', 'refresh_token', 'token_type', 'user_id']
@@ -18,11 +18,6 @@ def validateUser() -> bool:
         return False
 
     return True
-
-@app.route("/test")
-def test():
-    validateUser()
-    return render_template("index.html",contents="Hello")
 
 @app.route("/")
 def index():
