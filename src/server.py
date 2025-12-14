@@ -19,15 +19,16 @@ def validateUserSession() -> bool:
 
     return True
 
-def validateUserAuth(userCode: str) -> bool:
-    # for clarification, this is used to verify the users auth PRE access token grant
+def validateUserAuth(userCode: str) -> bool:    # for clarification, this is used to verify the users auth PRE access token grant
+    
     MAXLEN    = 306
     if userCode == None:
-        return render_template("error.html",error="Missing auth information")
+        return False
 
     if len(userCode) < MAXLEN:
-        return render_template("error.html",error="Returned auth code did not meet minimum character length")
- 
+        return False
+    
+    return True
 
 @app.route("/")
 def index():
