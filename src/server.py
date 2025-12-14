@@ -19,6 +19,16 @@ def validateUserSession() -> bool:
 
     return True
 
+def validateUserAuth(userCode: str) -> bool:
+    # for clarification, this is used to verify the users auth PRE access token grant
+    MAXLEN    = 306
+    if userCode == None:
+        return render_template("error.html",error="Missing auth information")
+
+    if len(userCode) < MAXLEN:
+        return render_template("error.html",error="Returned auth code did not meet minimum character length")
+ 
+
 @app.route("/")
 def index():
     return render_template("index.html",contents="Hello")
@@ -30,31 +40,24 @@ def spotify_auth_redirect():
 @app.route("/spotify-auth/oauth")
 def spotify_oauth():
 
-    MAXLEN    = 306
     userCode  = request.args.get('code')
-    userState = request.args.get('state')
 
-    ## Make some automatic checking function to put here 
-    if userCode == None or userState == None:
-        return render_template("error.html",error="Missing auth information")
+    if validateUserAuth(userCode):
 
-    if len(userCode) < MAXLEN:
-        return render_template("error.html",error="Returned auth code did not meet minimum character length")
-    ## Make some automatic checking function to put here 
+        user_information = getAccessToken(userCode)
+        user_information = combineDicts(user_information,getUserInformation(user_information["access_token"]))
+        user = User(user_information)
 
-    user_information = getAccessToken(userCode)
-    user_information = combineDicts(user_information,getUserInformation(user_information["access_token"]))
-    user = User(user_information)
+        messages = User.serialize(user)
+        session['messages'] = messages
 
-    messages = User.serialize(user)
-    session['messages'] = messages
-
-    return redirect("/spotify/playlists")
+        return redirect("/spotify/playlists")
+    return render_template("error.html")
 
 @app.route("/spotify/playlists")
 def spotify_display_playlists():
 
-    if validateUser():
+    if validateUserSession():
 
         user = User.deserialize(session['messages'])
         url = "https://api.spotify.com/v1/me/playlists"
@@ -70,7 +73,7 @@ def spotify_display_playlists():
 @app.route("/spotify/playlists/scan")
 def process_playlists():
 
-    if validateUser():
+    if validateUserSession():
 
         ids = idsToArray(request.args.get("ids"))
         user = User.deserialize(session['messages'])
