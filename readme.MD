@@ -3,6 +3,8 @@
 ## About
 > ⚠️ **Know that this project runs the webserver in HTTP which is insecure and should be treated as such if you are to put this on the wider internet**
 
+[<h3>With massive thanks to souloverAI for their range of AI artists being logged</h3>](https://github.com/romiem/ai-bands)
+
 <div><img style="float: left;" src="https://www.hypebot.com/wp-content/uploads/2022/01/Spotify-No.png" width=100><p style="margin-left: 17%;"> Spotislop remover is a web app that aims to remove AI "artists" from a users selection of playlists. This uses the <a href="https://developer.spotify.com/documentation/web-api">Spotify API</a> to achieve this. </p></div> 
 
 <div style="margin-top:15%;">
