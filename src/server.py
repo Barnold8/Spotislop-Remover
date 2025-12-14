@@ -17,6 +17,10 @@ def validateUserSession() -> bool:
     if set(session["messages"].keys()) != set(expectedUserKeys):
         return False
 
+    for key, value in session["messages"].items():
+        if value == None:
+            return False
+
     return True
 
 def validateUserAuth(userCode: str) -> bool:    # for clarification, this is used to verify the users auth PRE access token grant
