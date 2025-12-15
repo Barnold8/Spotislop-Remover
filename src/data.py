@@ -13,7 +13,7 @@ class User:
         self.user_id             = userPayload["user_id"]
         self.display_name        = userPayload["display_name"]
         self.expiration          = User.getExpirationDateTime(userPayload["expires_in"]) if type(userPayload["expires_in"]) == int else userPayload["expires_in"]
-        self.expiration_reminder = 120 # two minutes
+        self.expiration_reminder = 120
 
     def getExpirationDateTime(seconds: int) -> datetime:
         now = datetime.today()
