@@ -76,7 +76,7 @@ def secret_key() -> str:
         
     return secret_key
 
-def validateUserSession(session) -> bool:
+def validateUserSession(session:dict) -> bool:
 
     sessionKeys = session.keys()
     expectedUserKeys = ['access_token', 'display_name', 'expires_in', 'profile_picture', 'refresh_token', 'token_type', 'user_id']
