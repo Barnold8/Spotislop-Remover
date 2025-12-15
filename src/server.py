@@ -38,7 +38,7 @@ def validateUserSession() -> bool:
                     
                 case "expires_in":
                     try:
-                        date = date.fromisoformat(session["messages"]["expires_in"])
+                        validDate = datetime.fromisoformat(session["messages"]["expires_in"])
                     except ValueError:
                         return False
                     
