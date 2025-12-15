@@ -3,69 +3,11 @@ from Url import *
 from API_Handler import *
 from data import User, Playlist, combineDicts,idsToArray
 from datetime import datetime
+from security import validateUserAuth, validateUserSession
 import json
 import sys
 
 app = Flask(__name__)
-
-def validateUserSession() -> bool:
-
-    sessionKeys = session.keys()
-    expectedUserKeys = ['access_token', 'display_name', 'expires_in', 'profile_picture', 'refresh_token', 'token_type', 'user_id']
-    importantFields = ['access_token', 'display_name', 'expires_in', 'refresh_token', 'user_id']
-
-    if "messages" not in sessionKeys:
-        return False
-    
-    if set(session["messages"].keys()) != set(expectedUserKeys):
-        return False
-   
-    for key, value in session["messages"].items():
-        if value == None:
-            return False
-        
-        if key in importantFields: # fair bit of duplicate code since its mostly string validation with no specific metrics but it keeps it readable 
-            match key:
-                case "access_token":
-                    token =  session["messages"]["access_token"]
-                    if len(token) <= 0:
-                        return False
-                    
-                case "display_name":
-                    name = session["messages"]["display_name"]
-                    if len(name) > 30 or len(name) <= 0:
-                        return False
-                    
-                case "expires_in": 
-                    try:
-                        currentDate = session["messages"]["expires_in"].replace("/","-") # cos the formatting only accepts - and not /, needs to be fixed
-                        validDate = datetime.fromisoformat(currentDate)
-                        if datetime.today() > validDate: # if the token is expired
-                            return False
-                    except ValueError as e:
-                        return False
-                    
-                case "refresh_token":
-                    token = session["messages"]["refresh_token"]
-                    if len(token) <= 0:
-                        return False
-
-                case "user_id":
-                    token = session["messages"]["user_id"]
-                    if len(token) <= 0:
-                        return False
-
-    return True
-
-def validateUserAuth(userCode: str) -> bool:    # for clarification, this is used to verify the users auth PRE access token grant
-    MAXLEN = 306
-    if userCode == None:
-        return False
-
-    if len(userCode) < MAXLEN:
-        return False
-    
-    return True
 
 @app.route("/")
 def index():
@@ -94,7 +36,7 @@ def spotify_oauth():
 @app.route("/spotify/playlists")
 def spotify_display_playlists():
 
-    if validateUserSession():
+    if validateUserSession(session):
 
         user = User.deserialize(session['messages']) # 
         url = "https://api.spotify.com/v1/me/playlists"
@@ -110,7 +52,7 @@ def spotify_display_playlists():
 @app.route("/spotify/playlists/scan")
 def process_playlists():
 
-    if validateUserSession():
+    if validateUserSession(session):
 
         ids = idsToArray(request.args.get("ids"))
         user = User.deserialize(session['messages'])
