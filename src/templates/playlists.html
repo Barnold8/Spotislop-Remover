@@ -14,6 +14,7 @@
 
     
     <div id="snackbar">...</div>
+    <div id="warning-snackbar"></div>
     <nav role="navigation">
         <div id="menuToggle">
 
@@ -67,6 +68,22 @@
 
 
 
+{% if token_refresh %}
+{% set token_refresh = False %}
+
+<script>
+    var x = document.getElementById("warning-snackbar");
+
+    x.innerHTML = "<a href=\"../?login=False\"> ⚠️ Your login session is close to ending, please click me to log back in ⚠️ </a>"
+
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 10 * 1000);
+</script>
+
+{% endif %}
 
 </body>
 </html>
