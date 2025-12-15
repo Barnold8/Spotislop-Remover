@@ -36,11 +36,13 @@ def validateUserSession() -> bool:
                     if len(name) > 30 or len(name) <= 0:
                         return False
                     
-                case "expires_in":
-                    try:
-                        validDate = datetime.fromisoformat(session["messages"]["expires_in"])
-                    except ValueError:
-                        return False
+                # case "expires_in":
+                #     try:
+                #         currentDate = session["messages"]["expires_in"].replace("/","-") # cos the formatting only accepts - and not /, needs to be fixed
+                #         validDate = datetime.fromisoformat(currentDate)
+                #     except ValueError as e:
+                #         print(f"ERROR: {e}",sys.stderr)
+                #         return False
                     
                 case "refresh_token":
                     token = session["messages"]["refresh_token"]
@@ -82,6 +84,7 @@ def spotify_oauth():
         user_information = getAccessToken(userCode)
         user_information = combineDicts(user_information,getUserInformation(user_information["access_token"]))
         user = User(user_information)
+        user.isTokenExpired()
 
         messages = User.serialize(user)
         session['messages'] = messages
