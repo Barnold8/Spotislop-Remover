@@ -18,12 +18,15 @@ class User:
         now = datetime.today()
         expiration = now + timedelta(0,seconds)
         return expiration
-    
+
+    def isTokenExpired(self):
+        return datetime.today() > self.expiration
+
     def serialiseTime(expiration : datetime) -> str:
-        return expiration.strftime('%m/%d/%Y')
+        return expiration.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     def deserialiseTime(data: str) -> datetime:
-        return datetime.strptime(data,'%m/%d/%Y')
+        return datetime.strptime(data,'%Y-%m-%d %H:%M:%S.%f')
 
     def serialize(user: 'User') -> dict:
         
@@ -38,7 +41,6 @@ class User:
         }
 
         return serialised
-
 
     def deserialize(data:dict) -> 'User':
 
