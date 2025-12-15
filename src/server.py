@@ -36,10 +36,13 @@ def validateUserSession() -> bool:
                     if len(name) > 30 or len(name) <= 0:
                         return False
                     
-                case "expires_in":
+                case "expires_in": 
                     try:
-                        date = date.fromisoformat(session["messages"]["expires_in"])
-                    except ValueError:
+                        currentDate = session["messages"]["expires_in"].replace("/","-") # cos the formatting only accepts - and not /, needs to be fixed
+                        validDate = datetime.fromisoformat(currentDate)
+                        if datetime.today() > validDate: # if the token is expired
+                            return False
+                    except ValueError as e:
                         return False
                     
                 case "refresh_token":
@@ -82,7 +85,6 @@ def spotify_oauth():
         user_information = getAccessToken(userCode)
         user_information = combineDicts(user_information,getUserInformation(user_information["access_token"]))
         user = User(user_information)
-
         messages = User.serialize(user)
         session['messages'] = messages
 
@@ -94,14 +96,14 @@ def spotify_display_playlists():
 
     if validateUserSession():
 
-        user = User.deserialize(session['messages'])
+        user = User.deserialize(session['messages']) # 
         url = "https://api.spotify.com/v1/me/playlists"
         playlists = getUserPlaylists(url,user.access_token)
-        playlists = removeNonUserPlaylists(user.user_id,playlists)
-
+        playlists = removeNonUserPlaylists(user.user_id,playlists)   
+        refresh_token = user.remindToRefreshToken()     
         session['messages'] = User.serialize(user)
-        
-        return render_template("playlists.html",display_name=f"{user.display_name}'s playlists",playlists=playlists)
+
+        return render_template("playlists.html",display_name=f"{user.display_name}'s playlists",playlists=playlists,token_refresh=refresh_token)
     else:
         return render_template("error.html")
 
@@ -113,7 +115,6 @@ def process_playlists():
         ids = idsToArray(request.args.get("ids"))
         user = User.deserialize(session['messages'])
         playlists = []
-
         for id in ids:
             
             playlistIDS = id.split("|") # angry i had to do this because of spotify needing a fucking stupid snapshot id for whatever reason uprooting my code to force this upon it
@@ -123,7 +124,7 @@ def process_playlists():
             playlists.append(playlist)
 
         removeAI(playlists,user.access_token)
-
+        refresh_token = user.remindToRefreshToken()
         session['messages'] = User.serialize(user)
 
         return f"<html><h1>IDS</h1><p>f</p></html>"
