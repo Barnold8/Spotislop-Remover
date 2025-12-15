@@ -36,13 +36,14 @@ def validateUserSession() -> bool:
                     if len(name) > 30 or len(name) <= 0:
                         return False
                     
-                # case "expires_in":
-                #     try:
-                #         currentDate = session["messages"]["expires_in"].replace("/","-") # cos the formatting only accepts - and not /, needs to be fixed
-                #         validDate = datetime.fromisoformat(currentDate)
-                #     except ValueError as e:
-                #         print(f"ERROR: {e}",sys.stderr)
-                #         return False
+                case "expires_in": 
+                    try:
+                        currentDate = session["messages"]["expires_in"].replace("/","-") # cos the formatting only accepts - and not /, needs to be fixed
+                        validDate = datetime.fromisoformat(currentDate)
+                        if datetime.today() > currentDate: # if the token is expired
+                            return False
+                    except ValueError as e:
+                        return False
                     
                 case "refresh_token":
                     token = session["messages"]["refresh_token"]
@@ -84,8 +85,6 @@ def spotify_oauth():
         user_information = getAccessToken(userCode)
         user_information = combineDicts(user_information,getUserInformation(user_information["access_token"]))
         user = User(user_information)
-        user.isTokenExpired()
-
         messages = User.serialize(user)
         session['messages'] = messages
 
@@ -100,9 +99,9 @@ def spotify_display_playlists():
         user = User.deserialize(session['messages'])
         url = "https://api.spotify.com/v1/me/playlists"
         playlists = getUserPlaylists(url,user.access_token)
-        playlists = removeNonUserPlaylists(user.user_id,playlists)
-
+        playlists = removeNonUserPlaylists(user.user_id,playlists)        
         session['messages'] = User.serialize(user)
+
         
         return render_template("playlists.html",display_name=f"{user.display_name}'s playlists",playlists=playlists)
     else:
@@ -116,7 +115,6 @@ def process_playlists():
         ids = idsToArray(request.args.get("ids"))
         user = User.deserialize(session['messages'])
         playlists = []
-
         for id in ids:
             
             playlistIDS = id.split("|") # angry i had to do this because of spotify needing a fucking stupid snapshot id for whatever reason uprooting my code to force this upon it
