@@ -6,13 +6,14 @@ from datetime import datetime,timedelta
 class User:
 
     def __init__(self,userPayload: dict):
-        self.access_token       = userPayload["access_token"]
-        self.refresh_token      = userPayload["refresh_token"]
-        self.token_type         = userPayload["token_type"]
-        self.profile_picture    = userPayload["profile_picture"]
-        self.user_id            = userPayload["user_id"]
-        self.display_name       = userPayload["display_name"]
-        self.expiration         = User.getExpirationDateTime(userPayload["expires_in"]) if type(userPayload["expires_in"]) == int else userPayload["expires_in"]
+        self.access_token        = userPayload["access_token"]
+        self.refresh_token       = userPayload["refresh_token"]
+        self.token_type          = userPayload["token_type"]
+        self.profile_picture     = userPayload["profile_picture"]
+        self.user_id             = userPayload["user_id"]
+        self.display_name        = userPayload["display_name"]
+        self.expiration          = User.getExpirationDateTime(userPayload["expires_in"]) if type(userPayload["expires_in"]) == int else userPayload["expires_in"]
+        self.expiration_reminder = 120 # two minutes
 
     def getExpirationDateTime(seconds: int) -> datetime:
         now = datetime.today()
@@ -21,6 +22,9 @@ class User:
 
     def isTokenExpired(self):
         return datetime.today() > self.expiration
+    
+    def remindToRefreshToken(self):
+        return datetime.today() > User.getExpirationDateTime(self.expiration_reminder)
 
     def serialiseTime(expiration : datetime) -> str:
         return expiration.strftime('%Y-%m-%d %H:%M:%S.%f')
