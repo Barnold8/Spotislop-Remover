@@ -40,7 +40,7 @@ def validateUserSession() -> bool:
                     try:
                         currentDate = session["messages"]["expires_in"].replace("/","-") # cos the formatting only accepts - and not /, needs to be fixed
                         validDate = datetime.fromisoformat(currentDate)
-                        if datetime.today() > currentDate: # if the token is expired
+                        if datetime.today() > validDate: # if the token is expired
                             return False
                     except ValueError as e:
                         return False
@@ -96,13 +96,12 @@ def spotify_display_playlists():
 
     if validateUserSession():
 
-        user = User.deserialize(session['messages'])
+        user = User.deserialize(session['messages']) # 
         url = "https://api.spotify.com/v1/me/playlists"
         playlists = getUserPlaylists(url,user.access_token)
         playlists = removeNonUserPlaylists(user.user_id,playlists)        
         session['messages'] = User.serialize(user)
 
-        
         return render_template("playlists.html",display_name=f"{user.display_name}'s playlists",playlists=playlists)
     else:
         return render_template("error.html")
