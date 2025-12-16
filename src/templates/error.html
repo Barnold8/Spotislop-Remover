@@ -1,6 +1,7 @@
 <html>
  <head>
     <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static',filename='styles/error.css') }}">
+    <script src="{{url_for('static', filename='js/error.js')}}"></script>
 
    <title>Uh Oh! An error ocurred!</title>
  </head>
@@ -11,7 +12,6 @@
         <h1>
           <span class="glitch" data-text="Uh Oh! An error ocurred!">
           Uh Oh! An error ocurred!
-          </span>
         </h1>
       </main>
     </div>
@@ -19,9 +19,8 @@
 
   <div>
       
-      <!-- &#9660; -->
-    <h1 onclick="" id="content-dropdown">Error information &#9658; </h1>
-    <h2 class="hidden">{{error}}</h2>
+    <h1 onclick="revealInformation(this)" id="content-dropdown">Error information &#9658; </h1>
+    <h2 id="contents" class="hidden">{{error}}</h2>
 
   </div>
 
