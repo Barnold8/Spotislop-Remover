@@ -73,6 +73,7 @@ h2{
   text-align: center;
   margin-top: auto;
   padding: 16px;
+  margin-top: 50vh;
   color: var(--title-color);
   background: transparent;
   box-shadow: 0px 0px 0px 1px var(--title-color);
