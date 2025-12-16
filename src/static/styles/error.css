@@ -13,6 +13,8 @@
   --dark: hsl(0, 0%, 7%);
   --text-gray: hsl(0, 0%, 30%);
   --title-color: #1DD05D;
+  --error-color: #1DB954;
+  --error-negative: #e246ab; 
 }
 
 body {
@@ -90,7 +92,7 @@ h1 {
 .glitch {
 	position: relative;
 	margin: 0 auto;
-	background: #66bd43;
+	background-color: var(--error-color);
 }
 
 .glitch::before,
@@ -110,7 +112,7 @@ h1 {
 	animation-duration: 4s;
 	left: 4px;
 	text-shadow: -1px 0 #ffa800;
-	background: #4242e6;
+	background-color: var(--error-negative);
 }
 
 .glitch::before {
@@ -118,7 +120,7 @@ h1 {
 	animation-duration: 6s;
 	left: -4px;
 	text-shadow: 1px 0 #00d8ff;
-	background: #4242e6;
+	background-color: var(--error-color);
 }
 
 /* Expanded Animations */
