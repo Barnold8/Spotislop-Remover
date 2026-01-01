@@ -85,6 +85,13 @@ function addToCart(name,id,snapshot_id){
         const newPlayList    = document.createElement("label")
         const newRemovalText = document.createElement("label")
 
+        newRemovalText.onclick = function(){
+            parent = this.parentNode
+            playlist = parent.parentNode
+            playlist.remove()
+
+        }
+
         newRemovalText.classList = "remove"
         playListItem.classList   = "listItem"
         removalItem.classList    = "listItem"
