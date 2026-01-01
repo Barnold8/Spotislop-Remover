@@ -6,7 +6,7 @@ function revealInformation(element){
     rightArrow = '\u{25B6}'
 
     if(classList.includes("hidden")){
-        contents.classList = ""
+        contents.classList = "error-contents"
         element.innerText = `Error information ${downArrow}`
     }else{
         contents.classList = "hidden"

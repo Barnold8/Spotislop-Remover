@@ -66,6 +66,15 @@ h2{
   flex: 100% 0 120px;
 }
 
+.error-contents{
+	margin-left:20%;
+    /* left: 0;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%; */
+}
+
 .button {
   display: block;
   justify-content: center;
@@ -80,6 +89,8 @@ h2{
   transition: background 0.4s ease;
 }
 
+
+
 .button:hover {
   background: var(--light-gray-bg);
   color: var(--dark)
@@ -87,7 +98,7 @@ h2{
 
 
 .hidden{
-	 display:none;
+	display:none;
 }
 
 
@@ -168,6 +179,13 @@ h1 {
 	left: -4px;
 	text-shadow: 1px 0 #00d8ff;
 	background-color: var(--error-color);
+}
+
+#contents{
+
+	text-align: center;
+
+	width: 65%;
 }
 
 /* Expanded Animations */
