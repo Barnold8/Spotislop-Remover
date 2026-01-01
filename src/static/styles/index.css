@@ -12,6 +12,7 @@
   --white: hsl(0, 0%, 100%);
   --dark: hsl(0, 0%, 7%);
   --text-gray: hsl(0, 0%, 30%);
+  --text-black: hsl(0, 0%, 7%);
   --title-color: #1DD05D;
 }
 
@@ -19,11 +20,71 @@ body {
   background: var(--dark);
   font-family: "Space Grotesk", sans-serif;
   color: var(--light-bg);
-}
-
-img{
-
-    width: 4vh;
-    height: auto;
 
 }
+
+.fancyTextTitle {
+  margin-top: 10%;
+	font-size: 6em;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 1;
+	color: transparent;
+	-webkit-text-stroke: 1.5px var(--title-color);
+	text-shadow: 0 0 0 var(--text-black);
+	transition: all 250ms;
+}
+
+.fancyTextTitle:hover {
+	text-shadow: 4px 4px 0 #fff;
+	transform: translate(-2px, -2px)
+}
+
+
+#container{
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+
+
+  width: 85vw;
+  height: 85vh;
+  border-radius: 4%;
+  /* background: var(--dark);
+  box-shadow: 5px 10px #1111; */
+}
+
+
+.button {
+
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  width: 20%;
+  padding: 16px;
+  color: var(--title-color);
+  background-color: var(--dark);
+  /* background: transparent; */
+  box-shadow: 0px 0px 0px 1px var(--title-color);
+  transition: background 0.4s ease;
+  bottom: 0;
+  margin-top: 10%;
+  margin-left: 33vw;
+}
+
+.button:hover {
+  background: var(--light-gray-bg);
+  color: var(--dark)
+}
+
+/* #container{
+    text-align: center;
+    padding-top:10vh;
+    
+} */
