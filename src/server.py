@@ -31,7 +31,7 @@ def spotify_oauth():
         session['messages'] = messages
 
         return redirect("/spotify/playlists")
-    return render_template("error.html")
+    return render_template("error.html",error="N/A")
 
 @app.route("/spotify/playlists")
 def spotify_display_playlists():
@@ -47,7 +47,7 @@ def spotify_display_playlists():
 
         return render_template("playlists.html",display_name=f"{user.display_name}'s playlists",playlists=playlists,token_refresh=refresh_token)
     else:
-        return render_template("error.html")
+        return render_template("error.html",error="N/A")
 
 @app.route("/spotify/playlists/scan")
 def process_playlists():
@@ -70,4 +70,4 @@ def process_playlists():
         session['messages'] = User.serialize(user)
 
         return f"<html><h1>IDS</h1><p>f</p></html>"
-    return render_template("error.html")
+    return render_template("error.html",error="N/A")

@@ -1,11 +1,37 @@
 <html>
  <head>
-   <title>Flask Static Demo</title>
+   <title>Spotislop remover</title>
+   <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static',filename='styles/index.css') }}">
+
+   <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='images/Spotify_logo.png') }}">
  </head>
- <body>
-   <h1>Hello world!</h1>
-   <h2><a href="spotify-auth">Spotify auth</a></h2>
-   <h3><p>{{contents}} </p></h3>
+ <!--   -->
+ <body
+> 
+<!-- {{url_for('static',filename='images/antiAi.gif;')}}  -->
+<div class="background"  style=
+"
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: url('{{ url_for('static',filename='images/antiAI.gif') }}');
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px);
+  z-index: -1;
+"
+></div><!-- Inline cos flask .-. -->
+
+
+<div id="container">
+  <h1 class="fancyTextTitle">Spotislop Remover</h1>
+
+  <h2>
+    <a href="spotify-auth" class="button">Remove AI Slop</a>
+  </h2>
+
+
+</div>
 
  </body>
 </html>

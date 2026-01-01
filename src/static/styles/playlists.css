@@ -15,6 +15,7 @@
   --dark: hsl(0, 0%, 7%);
   --text-gray: hsl(0, 0%, 30%);
   --title-color: #1DD05D;
+  --title-color-darker: #1dbe56;
 }
 
 body {
@@ -202,6 +203,63 @@ img{
    background-color: var(--title-color);
    color: black;
    text-align: center;
+}
+
+dialog {
+ margin: 0; /* `margin: auto;` is the default. */
+ transform: translateX(-50%);
+ left: 50%;
+ width:25vw;
+ height:25vh;
+ z-index: 2;
+ background-color: var(--dark);
+ color: #fff;
+ border-color: var(--title-color);
+}
+
+.loaderContainer{
+  margin: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+
+}
+/* https://css-loaders.com/spinner/ */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  animation: l14 4s infinite;
+}
+.loader::before,
+.loader::after {    
+  content: "";
+  grid-area: 1/1;
+  border: 8px solid;
+  border-radius: 50%;
+  border-color: var(--title-color) var(--title-color-darker) #0000 #0000;
+  mix-blend-mode: darken;
+  animation: l14 1s infinite linear;
+}
+.loader::after {
+  border-color: #0000 #0000 #0000 #0000;
+  animation-direction: reverse;
+}
+
+.modalBackdrop{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color:rgba(0,0,0,0.5);
+    z-index: 1;
+    display: none;
+}
+@keyframes l14{ 
+  100%{transform: rotate(1turn)}
 }
 
 @media (min-width: 320px) {

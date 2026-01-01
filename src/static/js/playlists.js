@@ -119,12 +119,23 @@ function scanPlaylists(){
     list = list.getElementsByTagName("li")
 
     ids = []
+    if(list.length > 0){
+        
+        for (let item of list) {
+            ids.push( `${item.getAttribute("id")}|${item.getAttribute("snapshot_id")}`)
+        }
 
-    for (let item of list) {
-        ids.push( `${item.getAttribute("id")}|${item.getAttribute("snapshot_id")}`)
-    }
+        modalBackdrop = document.getElementsByClassName("modalBackdrop")[0]
+        modalBackdrop.style.display = "block";
+        document.getElementById("dialogue").show()
+        window.location.href = `${window.location.href}/scan?ids=${ids}`
     
-    window.location.href = `${window.location.href}/scan?ids=${ids}`
+    }
+    else{
+
+        toast("You need to pick playlists to scan to use this button.",3)
+
+    }
 
 }
 
